@@ -1,9 +1,13 @@
-<?php
+<?php 
+
+// Este archivo debe borrarse. 
+// Se mantiene por posibles conflictos con el Framework //
+
     namespace Models;
 
-    use Models\Person as Person;
+    use Models\User as User;
 
-    class Student extends Person
+    class Student extends User
     {
         private $recordId;
 
