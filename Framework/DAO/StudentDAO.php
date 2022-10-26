@@ -11,7 +11,7 @@
         private $connection;
         private $tableName = "students";
 
-        public function Add(Student $student)
+       public function Add(Student $student)
         {
             try
             {
