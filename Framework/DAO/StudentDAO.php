@@ -9,15 +9,16 @@
     class StudentDAO implements IStudentDAO
     {
         private $connection;
-        private $tableName = "students";
+        private $tableName = "owner";
 
-        public function Add(Student $student)
+       public function Add(Student $student)
         {
+            echo 'hola';
             try
             {
-                $query = "INSERT INTO ".$this->tableName." (recordId, firstName, lastName) VALUES (:recordId, :firstName, :lastName);";
+                $query = "INSERT INTO ".$this->tableName." (Id, firstName, lastName) VALUES (:Id, :firstName, :lastName);";
                 
-                $parameters["recordId"] = $student->getRecordId();
+                $parameters["Id"] = $student->getRecordId();
                 $parameters["firstName"] = $student->getFirstName();
                 $parameters["lastName"] = $student->getLastName();
 
