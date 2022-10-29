@@ -9,7 +9,7 @@
     class OwnerDAO implements IOwnerDAO
     {
         private $connection;
-        private $tableName = "owners";
+        private $tableName = "owner";
 
         public function Add(Owner $owner)
         {
@@ -48,12 +48,12 @@
                 
                 foreach ($resultSet as $row)
                 {                
-                    $keeper = new Owner('$firstName', '$lastName', '$dni', '$email', '$phone');
-                    $keeper->setFirstName($row["firstName"]);
-                    $keeper->setLastName($row["lastName"]);
-                    $keeper->setDni($row["dni"]);
-                    $keeper->setEmail($row["email"]);
-                    $keeper->setPhone($row["phone"]);
+                    $owner = new Owner('$firstName', '$lastName', '$dni', '$email', '$phone');
+                    $owner->setFirstName($row["firstName"]);
+                    $owner->setLastName($row["lastName"]);
+                    $owner->setDni($row["dni"]);
+                    $owner->setEmail($row["email"]);
+                    $owner->setPhone($row["phone"]);
 
                     array_push($ownerList, $owner);
                 }
@@ -66,3 +66,4 @@
             }
         }
     }
+?>
