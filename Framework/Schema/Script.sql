@@ -8,3 +8,4 @@ CREATE TABLE Owner
     firstName NVARCHAR(100) NOT NULL,
     lastName NVARCHAR(100) NOT NULL
 )Engine=InnoDB;
+select *from Owner;

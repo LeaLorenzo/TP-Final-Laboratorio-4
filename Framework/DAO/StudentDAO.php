@@ -1,6 +1,6 @@
 <?php
     namespace DAO;
-
+    
     use \Exception as Exception;
     use DAO\IStudentDAO as IStudentDAO;
     use Models\Student as Student;    
@@ -47,7 +47,7 @@
                 foreach ($resultSet as $row)
                 {                
                     $student = new Student();
-                    $student->setRecordId($row["recordId"]);
+                    $student->setId($row["Id"]);
                     $student->setFirstName($row["firstName"]);
                     $student->setLastName($row["lastName"]);
 
