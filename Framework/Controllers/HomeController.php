@@ -5,7 +5,13 @@
     {
         public function Index($message = "")
         {
-            require_once(VIEWS_PATH."student-add.php");
+            require_once(VIEWS_PATH."login.php");
         }        
+
+        public function Logout()
+        {
+            require_once(VIEWS_PATH."logout.php");
+        } 
+        
     }
 ?>

@@ -1,5 +1,15 @@
 <?php
-    require_once('nav.php');
+     
+     require_once('nav.php');
+    
+
+    if(isset($_SESSION["loggedUser"])){
+          
+          var_dump($_SESSION["loggedUser"]);
+
+    }else{
+          echo "hola fallo";
+    }
 ?>
 <main class="py-5">
      <section id="listado" class="mb-5">

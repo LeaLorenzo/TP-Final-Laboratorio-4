@@ -1,53 +1,21 @@
 <?php
     namespace Models;
 
-    abstract class User
+    class User
     {
         private $id;
-        private $firstName;
-        private $lastName;
-        private $dni;
         private $email;
-        private $phone;
+        private $password;
+        private $typeUser;
+        private $user;
 
         public function getId()
         {
             return $this->id;
         }
-
         public function setId($id)
         {
             $this->id = $id;
-        }
-
-        public function getFirstName()
-        {
-            return $this->firstName;
-        }
-
-        public function setFirstName($firstName)
-        {
-            $this->firstName = $firstName;
-        }
-
-        public function getLastName()
-        {
-            return $this->lastName;
-        }
-
-        public function setLastName($lastName)
-        {
-            $this->lastName = $lastName;
-        }
-
-        public function getDni()
-        {
-            return $this->dni;
-        }
-
-        public function setDni($dni)
-        {
-            $this->dni = $dni;
         }
 
         public function getEmail()
@@ -60,14 +28,35 @@
             $this->email = $email;
         }
 
-        public function getPhone()
+        public function getPassword()
         {
-            return $this->phone;
+            return $this->password;
+        }
+        
+        public function setPassword($password)
+        {
+            $this->password = $password;
         }
 
-        public function setPhone($phone)
+        public function getTypeUser()
         {
-            $this->phone = $phone;
+            return $this->typeUser;
         }
+        
+        public function setTypeUser($typeUser)
+        {
+            $this->typeUser = $typeUser;
+        }
+
+        public function getUser()
+        {
+            return $this->user;
+        }
+        
+        public function setUser($user)
+        {
+            $this->user = $user;
+        }
+
     }
 ?>
