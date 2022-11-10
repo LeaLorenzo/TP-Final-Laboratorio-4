@@ -5,7 +5,16 @@
     {
         public function Index($message = "")
         {
-            require_once(VIEWS_PATH."student-add.php");
-        }        
+            
+            if(isset($_SESSION["loggedUser"])){
+                //var_dump($_SESSION);
+                //Si existe usuario en session pasa el logueo
+                require_once(VIEWS_PATH."home.php");
+
+            }else{
+                //Si no hay usuario en session muestra el logueo
+                require_once(VIEWS_PATH."login.php");
+            }
+        }              
     }
 ?>

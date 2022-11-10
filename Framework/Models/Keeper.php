@@ -5,6 +5,7 @@ class Keeper extends User
     private $petSize;
     private $payment;
 
+    /*
     function __construct($firstName,$lastName,$dni,$email,$phone,$petSize,$payment)
     {
         $this->firstName = $firstName;
@@ -15,6 +16,7 @@ class Keeper extends User
         $this->petSize = $petSize;
         $this->payment = $payment;
     }
+    */
 
     public function getPetSize()
     {
