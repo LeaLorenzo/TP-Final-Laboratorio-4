@@ -22,7 +22,7 @@
                 $parameters["lastName"] = $owner->getLastName();
                 $parameters["dni"] = $owner->getDni();
                 $parameters["email"] = $owner->getEmail();
-                $parameters["phone"] = $owner->getPhone();
+                
 
                 $this->connection = Connection::GetInstance();
 
@@ -53,7 +53,7 @@
                     $owner->setLastName($row["lastName"]);
                     $owner->setDni($row["dni"]);
                     $owner->setEmail($row["email"]);
-                    $owner->setPhone($row["phone"]);
+                    
 
                     array_push($ownerList, $owner);
                 }
