@@ -3,6 +3,7 @@
 
     use \Exception as Exception;
     use DAO\IUserDAO as IUserDAO;
+    use Models\User as User;  
     use Models\Owner as Owner;
     use Models\Keeper as Keeper;  
     use DAO\Connection as Connection;
@@ -72,26 +73,27 @@
         {
             try
             {
-                $keeperList = array();
 
-                $query = "SELECT * FROM ".$this->tableName;
+                $query = "SELECT idUser, user, email, password, tipoUsuario FROM user where email = :email";
+
+                $parameters['email'] = $email;
 
                 $this->connection = Connection::GetInstance();
 
-                $resultSet = $this->connection->Execute($query);
-                
-                foreach ($resultSet as $row)
-                {                
-                    $owner = new Owner('$firstName', '$lastName', '$dni', '$email');
-                    $owner->setFirstName($row["firstName"]);
-                    $owner->setLastName($row["lastName"]);
-                    $owner->setDni($row["dni"]);
-                    $owner->setEmail($row["email"]);
-
-                    array_push($ownerList, $owner);
+                $resultSet = $this->connection->Execute($query, $parameters);
+                $user = null;
+                if(!empty($resultSet)){
+                    foreach($resultSet as $row){
+                        $user = new User();
+                        $user->setId($row["idUser"]);
+                        $user->setUser($row["user"]);
+                        $user->setEmail($row["email"]);
+                        $user->setPassword($row["password"]);
+                        $user->setTypeUser($row["tipoUsuario"]);
+                    }
                 }
-
-                return $ownerList;
+                return $user;
+                
             }
             catch(Exception $ex)
             {
