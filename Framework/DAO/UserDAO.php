@@ -3,6 +3,7 @@
 
     use \Exception as Exception;
     use DAO\IUserDAO as IUserDAO;
+    use Models\User as User;  
     use Models\Owner as Owner;
     use Models\Keeper as Keeper;  
     use DAO\Connection as Connection;
@@ -16,17 +17,32 @@
         {
             try
             {
-                $query = "INSERT INTO ".$this->tableName." (firstName, lastName, dni, email) VALUES (:firstName, 
-                :lastName, :dni, :email);";
+                $query = "INSERT INTO User (user,password, email,tipoUsuario) VALUES (
+                :user, :password, :email,1);";
 
-                $parameters["firstName"] = $owner->getFirstName();
-                $parameters["lastName"] = $owner->getLastName();
-                $parameters["dni"] = $owner->getDni();
+                $parameters["user"] = $owner->getUser();
+                $parameters["password"] = $owner->getPassword();
                 $parameters["email"] = $owner->getEmail();
 
                 $this->connection = Connection::GetInstance();
 
                 $this->connection->ExecuteNonQuery($query, $parameters);
+
+                $idDB = $this->GetByEmail($parameters["email"]);
+                $parameters = null;
+                $query = null;
+                if(isset($idDB)){
+                    $query = "INSERT INTO Owner (name, surname,idUser) VALUES (
+                        :name, :surname, :idUser);";
+        
+                    $parameters["name"] = $owner->getFirstName();
+                    $parameters["surname"] = "apellido";//$owner->getLastName();
+                    $parameters["idUser"] = $idDB->getId();
+    
+                    $this->connection = Connection::GetInstance();
+    
+                    $this->connection->ExecuteNonQuery($query, $parameters);
+                }
             }
             catch(Exception $ex)
             {
@@ -46,8 +62,18 @@
                 $parameters["email"] = $keeper->getEmail();
 
                 $this->connection = Connection::GetInstance();
-
                 $this->connection->ExecuteNonQuery($query, $parameters);
+
+                $idDB = $this->GetByEmail($parameters["email"]);
+                $parameters = null;
+                $query = null;
+                if(isset($idDB)){
+                    $parameters["idUser"] = $idDB->getId();
+                    $query = "INSERT INTO keepers (idUser) VALUES (
+                        :idUser);";
+                    $this->connection = Connection::GetInstance();
+                    $this->connection->ExecuteNonQuery($query, $parameters);
+                }
             }
             catch(Exception $ex)
             {
@@ -59,64 +85,34 @@
         {
             try
             {
-                $keeperList = array();
 
-                $query = "SELECT * FROM ".$this->tableName;
+                $query = "SELECT idUser, user, email, password, tipoUsuario FROM user where email = :email";
+
+                $parameters['email'] = $email;
 
                 $this->connection = Connection::GetInstance();
 
-                $resultSet = $this->connection->Execute($query);
-                
-                foreach ($resultSet as $row)
-                {                
-                    $owner = new Owner('$firstName', '$lastName', '$dni', '$email');
-                    $owner->setFirstName($row["firstName"]);
-                    $owner->setLastName($row["lastName"]);
-                    $owner->setDni($row["dni"]);
-                    $owner->setEmail($row["email"]);
-
-                    array_push($ownerList, $owner);
-                }
-
-                return $ownerList;
-            }
-            catch(Exception $ex)
-            {
-                throw $ex;
-            }
-        }
-        /*
-        public function GetByEmail($email)
-        {
-            try{
+                $resultSet = $this->connection->Execute($query, $parameters);
                 $user = null;
-
-                $query = "SELECT * FROM " . $this->tableName . " WHERE (email = :email)";
-
-                $parameters["email"] = $email;
-
-                $this->connection = Connection::GetInstance();
-
-                $results = $this->connection->Execute($query, $parameters);
-                
-                var_dump($results);
-                /*  foreach ($results as $row) {
-                    $user = new User();
-                    $user->setId($row["id_user"]);
-                    $user->setName($row["name"]);
-                    $user->setLastname($row["lastname"]);
-                    $user->setEmail($row["email"]);
-                    $user->setPassword($row["password"]);
-                    $user->setRol($row["rol"]);
+                if(!empty($resultSet)){
+                    foreach($resultSet as $row){
+                        $user = new User();
+                        $user->setId($row["idUser"]);
+                        $user->setUser($row["user"]);
+                        $user->setEmail($row["email"]);
+                        $user->setPassword($row["password"]);
+                        $user->setTypeUser($row["tipoUsuario"]);
+                    }
                 }
                 return $user;
+                
             }
             catch(Exception $ex)
             {
                 throw $ex;
             }
         }
-        */
+        
         public function GetAll()
         {
         }
