@@ -3,7 +3,8 @@
 
     use \Exception as Exception;
     use DAO\IUserDAO as IUserDAO;
-    use Models\User as User;    
+    use Models\Owner as Owner;
+    use Models\Keeper as Keeper;  
     use DAO\Connection as Connection;
 
     class UserDAO implements IUserDAO
@@ -11,18 +12,38 @@
         private $connection;
         private $tableName = "user";
 
-        public function Add(Owner $owner)
+        public function AddOwner(Owner $owner)
         {
             try
             {
-                $query = "INSERT INTO ".$this->tableName." (firstName, lastName, dni, email, phone) VALUES (:firstName, 
-                :lastName, :dni, :email, :phone);";
+                $query = "INSERT INTO ".$this->tableName." (firstName, lastName, dni, email) VALUES (:firstName, 
+                :lastName, :dni, :email);";
 
                 $parameters["firstName"] = $owner->getFirstName();
                 $parameters["lastName"] = $owner->getLastName();
                 $parameters["dni"] = $owner->getDni();
                 $parameters["email"] = $owner->getEmail();
-                $parameters["phone"] = $owner->getPhone();
+
+                $this->connection = Connection::GetInstance();
+
+                $this->connection->ExecuteNonQuery($query, $parameters);
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+
+        public function AddKeeper(Keeper $keeper)
+        {
+            try
+            {
+                $query = "INSERT INTO User (user,password, email,tipoUsuario) VALUES (
+                :user, :password, :email,2);";
+
+                $parameters["user"] = $keeper->getUser();
+                $parameters["password"] = $keeper->getPassword();
+                $parameters["email"] = $keeper->getEmail();
 
                 $this->connection = Connection::GetInstance();
 
@@ -48,12 +69,11 @@
                 
                 foreach ($resultSet as $row)
                 {                
-                    $owner = new Owner('$firstName', '$lastName', '$dni', '$email', '$phone');
+                    $owner = new Owner('$firstName', '$lastName', '$dni', '$email');
                     $owner->setFirstName($row["firstName"]);
                     $owner->setLastName($row["lastName"]);
                     $owner->setDni($row["dni"]);
                     $owner->setEmail($row["email"]);
-                    $owner->setPhone($row["phone"]);
 
                     array_push($ownerList, $owner);
                 }
@@ -65,6 +85,7 @@
                 throw $ex;
             }
         }
+        /*
         public function GetByEmail($email)
         {
             try{
@@ -88,13 +109,16 @@
                     $user->setPassword($row["password"]);
                     $user->setRol($row["rol"]);
                 }
-                */
                 return $user;
             }
             catch(Exception $ex)
             {
                 throw $ex;
             }
+        }
+        */
+        public function GetAll()
+        {
         }
 
     }

@@ -3,38 +3,70 @@
 namespace Controllers;
 
 use Models\User as User;
-use Utils\Session as Session;
+use DAO\UserDAO as UserDAO;
+use Models\Keeper;
 
 class UserController
 {
+    private $userDAO;
+
+    public function __construct()
+    {
+        $this->userDAO = new UserDAO();
+    }
+
     public function Login($email, $password)
     {
-        echo "hola".$email.$password;
         $this->user = new User();
+
+        //Prueba llamada dao
         $this->user->setEmail($email);
         $this->user->setPassword($password);
-        var_dump($this->user);
 
         if ($email === "email"  && $password === "1234" ) {
-            
+            //Crea la session y redirige home
             $_SESSION["loggedUser"] = $this->user;
-            
-            header("Location: " . FRONT_ROOT . "Views/home.php");
+            require_once(VIEWS_PATH."home.php");
+
         } else {
-            echo "contraseña incorrecta";
-            // $_SESSION["error"] = "Contraseña o email incorrectos";
-            // header("Location: " . FRONT_ROOT . "Home/Index");
+            //Crea un mensaje get y redirige login
+            $_GET["errorLogueo"] = "Usuario incorrecto";
+            require_once(VIEWS_PATH."login.php");
         }
+    }
+
+    public function SignIn()
+    {
+        $keeperDB = new Keeper();
+        $keeperDB->setUser($_POST["user"]);
+        $keeperDB->setEmail($_POST["email"]);
+        $keeperDB->setPassword($_POST["password"]);
+        $this->userDAO->AddKeeper($keeperDB);
+    }
+
+    public function SignInMenu()
+    {
+        require_once(VIEWS_PATH."signInMenu.php");
+    }
+
+    public function SignInOwner()
+    {
+        $_SESSION["signInType"] = 1;
+        require_once(VIEWS_PATH."signIn.php");
+    }
+
+    public function SignInKeeper()
+    {
+        $_SESSION["signInType"] = 2;
+        require_once(VIEWS_PATH."signIn.php");
     }
 
     public function Logout()
     {
-        Session::VerifySession();
-        Session::DeleteSession();
-        header("Location: ". FRONT_ROOT . "Home/Index");
+        //Borra la session actual
+        session_destroy();
+        require_once(VIEWS_PATH . "login.php");
     }
 }
-
-?>
 
 ?>
