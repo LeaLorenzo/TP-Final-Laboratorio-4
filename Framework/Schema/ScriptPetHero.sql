@@ -22,10 +22,9 @@ CREATE TABLE `owner` (
   `surname` varchar(45) NOT NULL,
   `idUser` int NOT NULL,
   PRIMARY KEY (`idOwner`),
-  KEY `idUser_idx` (`idUser`),
   KEY `idUserOw_idx` (`idUser`),
-  CONSTRAINT `idUserO` FOREIGN KEY (`idUser`) REFERENCES `keepers` (`idKeepers`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `idUserO` FOREIGN KEY (`idUser`) REFERENCES `user` (`idUser`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
 CREATE TABLE `petstype` (
   `idPetsType` int NOT NULL AUTO_INCREMENT,
