@@ -57,6 +57,5 @@
         {
             $this->user = $user;
         }
-
     }
 ?>

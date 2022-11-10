@@ -2,6 +2,9 @@
 namespace Models; 
 class Owner extends User
 {
+    private $firstName;
+    private $lastName;
+    /*
     function __construct($firstName,$lastName,$dni,$email)
     {
         $this->firstName = $firstName;
@@ -9,6 +12,7 @@ class Owner extends User
         $this->dni = $dni;
         $this->email = $email;
     }
+    */
 
     public function getFirstName()
     {
@@ -22,9 +26,9 @@ class Owner extends User
     {
         return $this->lastname;
     }
-    public function setLastName($lasttName)
+    public function setLastName($lastName)
     {
-        $this->lastName = $lasttName;
+        $this->lastName = $lastName;
     }
     public function getDni()
     {
@@ -33,10 +37,6 @@ class Owner extends User
     public function setDni($dni)
     {
         $this->dni = $dni;
-    }
-    public function setEmail($email)
-    {
-        $this->email = $email;
     }
 }
 ?>

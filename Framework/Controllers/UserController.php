@@ -5,6 +5,7 @@ namespace Controllers;
 use Models\User as User;
 use DAO\UserDAO as UserDAO;
 use Models\Keeper;
+use Models\Owner;
 
 class UserController
 {
@@ -37,11 +38,27 @@ class UserController
 
     public function SignIn()
     {
-        $keeperDB = new Keeper();
-        $keeperDB->setUser($_POST["user"]);
-        $keeperDB->setEmail($_POST["email"]);
-        $keeperDB->setPassword($_POST["password"]);
-        $this->userDAO->AddKeeper($keeperDB);
+        $userDB = null;
+        if(isset($_POST["firstName"])){
+            $userDB = new Owner();
+            $userDB->setUser($_POST["user"]);
+            $userDB->setEmail($_POST["email"]);
+            $userDB->setPassword($_POST["password"]);
+            $userDB->setFirstName($_POST["firstName"]);
+            $userDB->setLastName($_POST["lastName"]);
+            // TODO: GETIDUSER
+            $this->userDAO->AddOwner($userDB);
+        }
+        else{
+            $userDB = new Keeper();
+            $userDB->setUser($_POST["user"]);
+            $userDB->setEmail($_POST["email"]);
+            $userDB->setPassword($_POST["password"]);
+            // TODO: GETIDUSER
+            $this->userDAO->AddKeeper($userDB);
+        }
+        $_SESSION["loggedUser"] = $userDB;
+        require_once(VIEWS_PATH."home.php");
     }
 
     public function SignInMenu()

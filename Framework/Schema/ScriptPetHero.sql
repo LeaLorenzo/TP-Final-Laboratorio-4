@@ -1,4 +1,9 @@
 create database PetHero;
+drop database pethero;
+use petHero;
+
+drop table user;
+
 CREATE TABLE `user` (
   `idUser` int NOT NULL AUTO_INCREMENT,
   `email` varchar(50) NOT NULL,
@@ -6,7 +11,9 @@ CREATE TABLE `user` (
   `tipoUsuario` varchar(50) NOT NULL,
   `user` varchar(45) NOT NULL,
   PRIMARY KEY (`idUser`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ;
+
+drop table keepers;
 
 CREATE TABLE `keepers` (
   `idKeepers` int NOT NULL AUTO_INCREMENT,
@@ -14,7 +21,9 @@ CREATE TABLE `keepers` (
   PRIMARY KEY (`idKeepers`),
   KEY `idUser_idx` (`idUser`),
   CONSTRAINT `idUser` FOREIGN KEY (`idUser`) REFERENCES `user` (`idUser`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
+
+drop table owner;
 
 CREATE TABLE `owner` (
   `idOwner` int NOT NULL AUTO_INCREMENT,
@@ -23,15 +32,14 @@ CREATE TABLE `owner` (
   `idUser` int NOT NULL,
   PRIMARY KEY (`idOwner`),
   KEY `idUser_idx` (`idUser`),
-  KEY `idUserOw_idx` (`idUser`),
-  CONSTRAINT `idUserO` FOREIGN KEY (`idUser`) REFERENCES `keepers` (`idKeepers`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  CONSTRAINT `idUserO` FOREIGN KEY (`idUser`) REFERENCES `user` (`idUser`)
+);
 
 CREATE TABLE `petstype` (
   `idPetsType` int NOT NULL AUTO_INCREMENT,
   `description` varchar(45) NOT NULL,
   PRIMARY KEY (`idPetsType`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE `pets` (
   `idPets` int NOT NULL AUTO_INCREMENT,
@@ -47,7 +55,7 @@ CREATE TABLE `pets` (
   KEY `idPetsType_idx` (`idPetsType`),
   CONSTRAINT `idOwner` FOREIGN KEY (`idOwner`) REFERENCES `owner` (`idOwner`),
   CONSTRAINT `idPetsType` FOREIGN KEY (`idPetsType`) REFERENCES `petstype` (`idPetsType`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE `reviews` (
   `idReviews` int NOT NULL AUTO_INCREMENT,
@@ -61,7 +69,7 @@ CREATE TABLE `reviews` (
   KEY `idPets_idx` (`idPets`),
   CONSTRAINT `idKeeper` FOREIGN KEY (`idKeeper`) REFERENCES `keepers` (`idKeepers`),
   CONSTRAINT `idPets` FOREIGN KEY (`idPets`) REFERENCES `pets` (`idPets`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE `reserva` (
   `idReserva` int NOT NULL AUTO_INCREMENT,
@@ -76,7 +84,7 @@ CREATE TABLE `reserva` (
   KEY `idPets_idx` (`idPets`),
   CONSTRAINT `idKeeperRe` FOREIGN KEY (`idKeeper`) REFERENCES `keepers` (`idKeepers`),
   CONSTRAINT `idPetsRe` FOREIGN KEY (`idPets`) REFERENCES `pets` (`idPets`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE `tarifakeeper` (
   `idtarifaKeeper` int NOT NULL AUTO_INCREMENT,
@@ -85,7 +93,7 @@ CREATE TABLE `tarifakeeper` (
   PRIMARY KEY (`idtarifaKeeper`),
   KEY `idKeeperTa_idx` (`idKeeper`),
   CONSTRAINT `idKeeperTa` FOREIGN KEY (`idKeeper`) REFERENCES `keepers` (`idKeepers`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE `diasdisponibles` (
   `idDiasDisponibles` int NOT NULL AUTO_INCREMENT,
@@ -95,7 +103,7 @@ CREATE TABLE `diasdisponibles` (
   PRIMARY KEY (`idDiasDisponibles`),
   KEY `idKeeperDis_idx` (`idKeeper`),
   CONSTRAINT `idKeeperDis` FOREIGN KEY (`idKeeper`) REFERENCES `keepers` (`idKeepers`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
 
 CREATE TABLE `agendakeeper` (
   `idAgendaKeeper` int NOT NULL AUTO_INCREMENT,
@@ -105,4 +113,11 @@ CREATE TABLE `agendakeeper` (
   PRIMARY KEY (`idAgendaKeeper`),
   KEY `idDispo_idx` (`idDisponible`),
   CONSTRAINT `idDisponible` FOREIGN KEY (`idDisponible`) REFERENCES `diasdisponibles` (`idDiasDisponibles`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+);
+
+select * from user;
+
+select * from owner;
+
+INSERT INTO Owner (name, surname,idUser) VALUES (
+                    "name","surname", 1);

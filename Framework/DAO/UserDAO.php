@@ -16,17 +16,29 @@
         {
             try
             {
-                $query = "INSERT INTO ".$this->tableName." (firstName, lastName, dni, email) VALUES (:firstName, 
-                :lastName, :dni, :email);";
+                $query = "INSERT INTO User (user,password, email,tipoUsuario) VALUES (
+                :user, :password, :email,1);";
 
-                $parameters["firstName"] = $owner->getFirstName();
-                $parameters["lastName"] = $owner->getLastName();
-                $parameters["dni"] = $owner->getDni();
+                $parameters["user"] = $owner->getUser();
+                $parameters["password"] = $owner->getPassword();
                 $parameters["email"] = $owner->getEmail();
 
                 $this->connection = Connection::GetInstance();
 
                 $this->connection->ExecuteNonQuery($query, $parameters);
+                $parameters = null;
+                $query = null;
+
+                $query = "INSERT INTO Owner (name, surname,idUser) VALUES (
+                    :name, :surname, :idUser);";
+    
+                    $parameters["name"] = $owner->getFirstName();
+                    $parameters["surname"] = "apellido";//$owner->getLastName();
+                    $parameters["idUser"] = 2; // TODO: GETIDUSER
+    
+                    $this->connection = Connection::GetInstance();
+    
+                    $this->connection->ExecuteNonQuery($query, $parameters);
             }
             catch(Exception $ex)
             {
@@ -44,6 +56,7 @@
                 $parameters["user"] = $keeper->getUser();
                 $parameters["password"] = $keeper->getPassword();
                 $parameters["email"] = $keeper->getEmail();
+                // TODO: INSERCION TABLA KEEPER
 
                 $this->connection = Connection::GetInstance();
 
@@ -85,38 +98,7 @@
                 throw $ex;
             }
         }
-        /*
-        public function GetByEmail($email)
-        {
-            try{
-                $user = null;
-
-                $query = "SELECT * FROM " . $this->tableName . " WHERE (email = :email)";
-
-                $parameters["email"] = $email;
-
-                $this->connection = Connection::GetInstance();
-
-                $results = $this->connection->Execute($query, $parameters);
-                
-                var_dump($results);
-                /*  foreach ($results as $row) {
-                    $user = new User();
-                    $user->setId($row["id_user"]);
-                    $user->setName($row["name"]);
-                    $user->setLastname($row["lastname"]);
-                    $user->setEmail($row["email"]);
-                    $user->setPassword($row["password"]);
-                    $user->setRol($row["rol"]);
-                }
-                return $user;
-            }
-            catch(Exception $ex)
-            {
-                throw $ex;
-            }
-        }
-        */
+        
         public function GetAll()
         {
         }
