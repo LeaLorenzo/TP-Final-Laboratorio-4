@@ -27,19 +27,22 @@
                 $this->connection = Connection::GetInstance();
 
                 $this->connection->ExecuteNonQuery($query, $parameters);
+
+                $idDB = $this->GetByEmail($parameters["email"]);
                 $parameters = null;
                 $query = null;
-
-                $query = "INSERT INTO Owner (name, surname,idUser) VALUES (
-                    :name, :surname, :idUser);";
-    
+                if(isset($idDB)){
+                    $query = "INSERT INTO Owner (name, surname,idUser) VALUES (
+                        :name, :surname, :idUser);";
+        
                     $parameters["name"] = $owner->getFirstName();
                     $parameters["surname"] = "apellido";//$owner->getLastName();
-                    $parameters["idUser"] = 2; // TODO: GETIDUSER
+                    $parameters["idUser"] = $idDB->getId();
     
                     $this->connection = Connection::GetInstance();
     
                     $this->connection->ExecuteNonQuery($query, $parameters);
+                }
             }
             catch(Exception $ex)
             {
@@ -57,11 +60,20 @@
                 $parameters["user"] = $keeper->getUser();
                 $parameters["password"] = $keeper->getPassword();
                 $parameters["email"] = $keeper->getEmail();
-                // TODO: INSERCION TABLA KEEPER
 
                 $this->connection = Connection::GetInstance();
-
                 $this->connection->ExecuteNonQuery($query, $parameters);
+
+                $idDB = $this->GetByEmail($parameters["email"]);
+                $parameters = null;
+                $query = null;
+                if(isset($idDB)){
+                    $parameters["idUser"] = $idDB->getId();
+                    $query = "INSERT INTO keepers (idUser) VALUES (
+                        :idUser);";
+                    $this->connection = Connection::GetInstance();
+                    $this->connection->ExecuteNonQuery($query, $parameters);
+                }
             }
             catch(Exception $ex)
             {

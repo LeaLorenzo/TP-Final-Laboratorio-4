@@ -49,7 +49,6 @@ class UserController
             $userDB->setPassword($_POST["password"]);
             $userDB->setFirstName($_POST["firstName"]);
             $userDB->setLastName($_POST["lastName"]);
-            // TODO: GETIDUSER
             $this->userDAO->AddOwner($userDB);
         }
         else{
@@ -57,7 +56,6 @@ class UserController
             $userDB->setUser($_POST["user"]);
             $userDB->setEmail($_POST["email"]);
             $userDB->setPassword($_POST["password"]);
-            // TODO: GETIDUSER
             $this->userDAO->AddKeeper($userDB);
         }
         $_SESSION["loggedUser"] = $userDB;
