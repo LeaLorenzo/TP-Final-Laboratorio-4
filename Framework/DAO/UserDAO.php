@@ -36,7 +36,7 @@
                         :name, :surname, :idUser);";
         
                     $parameters["name"] = $owner->getFirstName();
-                    $parameters["surname"] = "apellido";//$owner->getLastName();
+                    $parameters["surname"] = $owner->getLastName();
                     $parameters["idUser"] = $idDB->getId();
     
                     $this->connection = Connection::GetInstance();

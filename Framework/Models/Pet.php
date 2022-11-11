@@ -2,20 +2,35 @@
 namespace Models;
 class Pet
 {
-    private $photo; // TODO averiguar qué hacer con las fotos de las mascotas
+    private $idPets;
+     // TODO averiguar qué hacer con las fotos de las mascotas
     private $name;
+    private $photo;
     private $breed;
-    private $size; // existe size en la clase Keeper, creo que le corresponde a Pet
+    private $idTypePets; // existe size en la clase Keeper, creo que le corresponde a Pet
     private $healthBook; // TP pide imagen
-    private $observation;
+    private $video;
+    private $idOwner;
 
-    function __construct($name,$breed,$size,$healthBook,$observation)
+
+    public function getIdPets()
     {
-        $this->name = $name;
-        $this->breed = $breed;
-        $this->size = $size;
-        $this->healthBook = $healthBook;
-        $this->observation = $observation;
+        return $this->idPets;
+    } 
+
+    public function setIdPets($idPets)
+    {
+        $this->idPets = $idPets;
+    }
+
+    public function getIdOwner()
+    {
+        return $this->idOwner;
+    } 
+
+    public function setIdOwner($idOwner)
+    {
+        $this->idOwner = $idOwner;
     }
 
     public function getPhoto()
@@ -48,14 +63,14 @@ class Pet
         $this->breed = $breed;
     }
 
-    public function getSize()
+    public function getIdTypePets()
     {
-        return $this->size;
+        return $this->idTypePets;
     }
 
-    public function setSize($size)
+    public function setIdTypePets($idTypePets)
     {
-        $this->size = $size;
+        $this->idTypePets = $idTypePets;
     }
 
     public function getHealthBook()
@@ -68,14 +83,14 @@ class Pet
         $this->healthBook = $healthBook;
     }
 
-    public function getObservation()
+    public function getVideo()
     {
-        return $this->observation;
+        return $this->video;
     }
 
-    public function setObservation($observation)
+    public function setVideo($video)
     {
-        $this->observation = $observation;
+        $this->video = $video;
     }
 }
 ?>
