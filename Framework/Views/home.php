@@ -1,32 +1,19 @@
-<?php  
+<?php 
+
      require_once('nav.php');
 ?>
 <main class="py-5">
      <section id="listado" class="mb-5">
           <div class="container">
-               <h2 class="mb-4">Agregar alumno</h2>
-               <form action="<?php echo FRONT_ROOT ?>Student/Add" method="post" class="bg-light-alpha p-5">
-                    <div class="row">                         
-                         <div class="col-lg-4">
-                              <div class="form-group">
-                                   <label for="">Legajo</label>
-                                   <input type="text" name="recordId" value="" class="form-control">
-                              </div>
-                         </div>
-                         <div class="col-lg-4">
-                              <div class="form-group">
-                                   <label for="">Nombre</label>
-                                   <input type="text" name="firstName" value="" class="form-control">
-                              </div>
-                         </div>
-                         <div class="col-lg-4">
-                              <div class="form-group">
-                                   <label for="">Apellido</label>
-                                   <input type="text" name="lastName" value="" class="form-control">
-                              </div>
-                         </div>
-                    </div>
-                    <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Agregar</button>
+               <h2 class="mb-4">HOME <?php if($_SESSION['loggedUser']->getTypeUser()==1){ echo "OWNER";} else{ echo "KEEPER";} ?></h2>
+               <form action="<?php echo FRONT_ROOT ?>Pet/ShowAddView" method="post" class="bg-light-alpha p-5">
+                    <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Agregar Mascota</button>
+               </form>
+               <form action="<?php echo FRONT_ROOT ?>Pet/ShowAllPets" method="post" class="bg-light-alpha p-5">
+                    <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Lista de Keepers</button>
+               </form>
+               <form action="<?php echo FRONT_ROOT ?>Student/ShowAddView" method="post" class="bg-light-alpha p-5">
+                    <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Reservar Keepers</button>
                </form>
           </div>
      </section>

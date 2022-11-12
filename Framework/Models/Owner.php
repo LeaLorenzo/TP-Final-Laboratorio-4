@@ -1,18 +1,12 @@
 <?php
 namespace Models; 
-class Owner extends User
+class Owner
 {
+    private $idOwner;
     private $firstName;
     private $lastName;
-    /*
-    function __construct($firstName,$lastName,$dni,$email)
-    {
-        $this->firstName = $firstName;
-        $this->lastname = $lastName;
-        $this->dni = $dni;
-        $this->email = $email;
-    }
-    */
+    private $idUser;
+
 
     public function getFirstName()
     {
@@ -24,19 +18,27 @@ class Owner extends User
     }
     public function getLastName()
     {
-        return $this->lastname;
+        return $this->lastName;
     }
     public function setLastName($lastName)
     {
         $this->lastName = $lastName;
     }
-    public function getDni()
+    public function getIdOwner()
     {
-        return $this->dni;
+        return $this->idOwner;
     }
-    public function setDni($dni)
+    public function setIdOwner($idOwner)
     {
-        $this->dni = $dni;
+        $this->idOwner = $idOwner;
+    }
+    public function getIdUser()
+    {
+        return $this->idUser;
+    }
+    public function setIdUser($idUser)
+    {
+        $this->idUser = $idUser;
     }
 }
 ?>

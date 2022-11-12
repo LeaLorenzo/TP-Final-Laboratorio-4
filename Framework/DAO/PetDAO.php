@@ -4,26 +4,27 @@ namespace DAO;
 use \Exception as Exception;
 use DAO\IPetDAO as IPetDAO;
 use Models\Pet as Pet;    
+use Models\Owner as Owner;  
 use DAO\Connection as Connection;
 
 class PetDAO implements IPetDAO
 {
     private $connection;
-    private $tableName = "pet";
 
-    public function Add(Pet $pet)
+    public function Add(Owner $owner,Pet $pet)
     {
         try
         {
-            $query = "INSERT INTO ".$this->tableName." (photo, name, breed, size, healthBook, observation) 
-            VALUES (:photo, :name, :breed, :size, :healthBook, :observation);";
+            $query = "INSERT INTO Pets ( name, raza, planVacuna, foto, video, idPetsType, idOwner) 
+            VALUES (:name, :breed, :healthBook, :photo, :video, :idTypePets, :idOwner);";
 
-            $parameters["photo"] = $pet->getPhoto();
             $parameters["name"] = $pet->getName();
             $parameters["breed"] = $pet->getBreed();
-            $parameters["size"] = $pet->getSize();
-            $parameters["healthBook"] = $pet->gethealthBook();
-            $parameters["observation"] = $pet->getObservation();
+            $parameters["healthBook"] = $pet->gethealthBook();       
+            $parameters["photo"] = $pet->getPhoto();
+            $parameters["video"] = $pet->getVideo(); 
+            $parameters["idTypePets"] = $pet->getIdTypePets();
+            $parameters["idOwner"] = $pet->getIdOwner();
 
             $this->connection = Connection::GetInstance();
 
@@ -35,32 +36,69 @@ class PetDAO implements IPetDAO
         }
     }
 
-    public function GetAll()
+    public function GetOwnerbyId($idUser)
     {
         try
         {
-            $keeperList = array();
 
-            $query = "SELECT * FROM ".$this->tableName;
+            $query = "SELECT o.idOwner, o.name, o.surname, o.idUser FROM user u inner join owner o on u.idUser = o.idUser
+            where o.idUser = :idUser";
+
+            $parameters['idUser'] = $idUser;
 
             $this->connection = Connection::GetInstance();
 
-            $resultSet = $this->connection->Execute($query);
+            $resultSet = $this->connection->Execute($query, $parameters);
+
+            $user = null;
+            if(!empty($resultSet)){
+                foreach($resultSet as $row){
+                    $user = new Owner();
+                    $user->setIdOwner($row["idOwner"]);
+                    $user->setFirstName($row["name"]);
+                    $user->setLastName($row["surname"]);
+                    $user->setIdUser($row["idUser"]);
+                }
+            }
+            return $user;
+            
+        }
+        catch(Exception $ex)
+        {
+            throw $ex;
+        }
+    }
+
+    public function GetAll($idOwner)
+    {
+        try
+        {
+            $petsList = array();
+
+            $query = "SELECT * FROM pets where idOwner = :idOwner";
+
+            $parameters['idOwner'] = $idOwner;
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query, $parameters);
             
             foreach ($resultSet as $row)
             {                
-                $pet = new Pet('photo', 'name', 'breed', 'size', 'healthBook', 'observation');
-                $pet->setPhoto($row["photo"]);
-                $pet->setName($row["Name"]);
-                $pet->setBreed($row["breed"]);
-                $pet->setSize($row["size"]);
-                $pet->setHealthBook($row["healthBook"]);
-                $pet->setObservation($row["observation"]);
+                $pet = new Pet();
+                $pet->setIdPets($row["idPets"]);
+                $pet->setName($row["name"]);
+                $pet->setBreed($row["raza"]);
+                $pet->setHealthBook($row["planVacuna"]);    
+                $pet->setPhoto($row["foto"]);
+                $pet->setVideo($row["video"]);
+                $pet->setIdTypePets($row["idPetsType"]);
+                $pet->setIdOwner($row["idOwner"]);
 
-                array_push($petList, $pet);
+                array_push($petsList, $pet);
             }
 
-            return $petList;
+            return $petsList;
         }
         catch(Exception $ex)
         {
