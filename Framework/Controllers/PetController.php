@@ -36,8 +36,6 @@ class PetController
     {
         $userOwner = new Owner();
 
-        var_dump($_SESSION["loggedUser"]->getId());
-
         $userOwner = $this->petDAO->GetOwnerbyId($_SESSION["loggedUser"]->getId());
         
         $pet = new Pet();

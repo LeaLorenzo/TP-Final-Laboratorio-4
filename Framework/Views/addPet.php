@@ -1,4 +1,9 @@
 <?php
+     require_once(VIEWS_PATH . "validate-session.php");
+     use DAO\PetDAO as PetDAO;
+     use Controllers\PetController;
+     use Models\Pet as Pet;
+     use Models\Owner as Owner;
     require_once('nav.php');
 ?>
 <main class="py-5">

@@ -1,5 +1,6 @@
 <?php
 
+require_once(VIEWS_PATH . "validate-session.php");
 require_once(VIEWS_PATH . "nav.php");
 
 use DAO\PetDAO as PetDAO;
@@ -25,18 +26,13 @@ use Models\Owner as Owner;
                 </thead>
                 <tbody>
                     <?php
+                    $userOwner = new Owner();
 
-                    //$petDAO = new petDAO();
-                    //$petList = $petDAO->GetAllPets();
+                    $userOwner = $this->petDAO->GetOwnerbyId($_SESSION["loggedUser"]->getId());
+
                     $petDAO=new PetDAO();
-                    $petList=$petDAO->GetAll(6);
-
-                    //var_dump($petList);
-                    
-                    //var_dump($owner);
-                    
+                    $petList=$petDAO->GetAll($userOwner->getIdOwner());
                     foreach ($petList as $pet) {
-                        //var_dump($pet);
                     ?>
                             <tr>
                                 <td><?php echo $pet->getIdPets() ?></td>
@@ -57,7 +53,7 @@ use Models\Owner as Owner;
     </section>
     
 
-    <section id="eliminar" class="mb-5">
+    <!-- <section id="eliminar" class="mb-5">
         <form action="<?php echo FRONT_ROOT . "Pet/Remove" ?>" method="post">
             <div class="container">
                 <h3 class="mb-3">Eliminar Mascota</h3>
@@ -75,59 +71,8 @@ use Models\Owner as Owner;
                     </div>
                 </div>
             </div>
-            <div>
-                <?php
-                if ($message != "") {
-                    echo "<div class='container alert alert-danger mt-3 p-3 text-center'>
-                    <p><strong>" . $message . "</strong></p>
-                    </div>";
-                }
-                ?>
-            </div>
         </form>
-    </section>
-    <!-- 
-
-        <section id="agregar" class="mb-7">
-            <form action="< ?php echo FRONT_ROOT . "Pet/RegisterPet" ?>" method="post" style="background-color: #EAEDED;padding: 2rem !important;">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Nombre mascota</th>
-                        <th>Raza</th>
-                        <th>Vacunaciones</th>
-                        <th>Link de Fotos</th>
-                        <th> Videos</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <input type="text" name="name" area required>
-                        </td>
-                        <td>
-                            <input type="text" name="race" required>
-                        </td>
-                        <td>
-                            <input type="text" name="vaccinationschendle" required>
-                        </td>
-                        <td>
-                            <input type="file" name="photo" required>
-                        </td>
-                        <td>
-                            <input type="file" name="video">
-                        </td>
-                        
-                    </tr>
-                </tbody>
-            </table>
-            <div>
-                <input type="submit" class="btn" value="Agregar mascota" style="background-color:#DC8E47;color:white;" />
-            </div>
-        </form>
-    </section>
--->
-
+    </section> HAY Q TERMINARLO-->
 </main>
 
 <?php
