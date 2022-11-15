@@ -17,10 +17,10 @@
         {
             try
             {
-                $query = "INSERT INTO User (user,password, email,tipoUsuario) VALUES (
+                $query = "INSERT INTO User (userName,password, email,tipoUsuario) VALUES (
                 :user, :password, :email,1);";
 
-                $parameters["user"] = $owner->getUser();
+                $parameters["userName"] = $owner->getUser();
                 $parameters["password"] = $owner->getPassword();
                 $parameters["email"] = $owner->getEmail();
 
@@ -54,10 +54,10 @@
         {
             try
             {
-                $query = "INSERT INTO User (user,password, email,tipoUsuario) VALUES (
-                :user, :password, :email,2);";
+                $query = "INSERT INTO user (userName,password, email,tipoUsuario) VALUES (
+                :userName, :password, :email,2);";
 
-                $parameters["user"] = $keeper->getUser();
+                $parameters["userName"] = $keeper->getUser();
                 $parameters["password"] = $keeper->getPassword();
                 $parameters["email"] = $keeper->getEmail();
 
@@ -86,7 +86,7 @@
             try
             {
 
-                $query = "SELECT idUser, user, email, password, tipoUsuario FROM user where email = :email";
+                $query = "SELECT idUser, userName, email, password, tipoUsuario FROM user where email = :email";
 
                 $parameters['email'] = $email;
 
@@ -98,7 +98,7 @@
                     foreach($resultSet as $row){
                         $user = new User();
                         $user->setId($row["idUser"]);
-                        $user->setUser($row["user"]);
+                        $user->setUser($row["userName"]);
                         $user->setEmail($row["email"]);
                         $user->setPassword($row["password"]);
                         $user->setTypeUser($row["tipoUsuario"]);
@@ -113,8 +113,32 @@
             }
         }
         
-        public function GetAll()
+        public function GetUserNameAll()
         {
+            try
+            {
+                $userList = array();
+
+                $query = "SELECT userName, tipoUsuario FROM user";
+
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+                
+                foreach ($resultSet as $row)
+                {                                
+                    $user = new User();
+                    $user->setUser($row["userName"]);
+                    $user->setTypeUser($row["tipoUsuario"]);
+                    array_push($userList, $user);
+                }
+
+                return $userList;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
         }
 
     }

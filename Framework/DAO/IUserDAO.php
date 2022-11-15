@@ -9,7 +9,8 @@ interface IUserDAO
 {
     function AddOwner(Owner $user);
     function AddKeeper(Keeper $user);
-    function GetAll();
+    //function GetAll();
     function GetByEmail($email);
+    function GetUserNameAll();
 }
 ?>

@@ -105,5 +105,12 @@ class PetDAO implements IPetDAO
             throw $ex;
         }
     }
+    // public function removePet($idOwner){
+    //     try
+    //     {
+    //         $query = "DELETE FROM `pethero`.`pets` WHERE (`idPets` = '12');";
+
+    //     }
+    // }
 }
 ?>

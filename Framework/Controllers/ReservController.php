@@ -3,19 +3,15 @@ namespace Controllers;
 
 use DAO\KeeperDAO as KeeperDAO;
 use Models\Keeper as Keeper;
+use Models\Reserv as Reserv;
 
-class KeeperController
+class ReservController
 {
-    private $keeperDAO;
 
-    public function __construct()
-    {
-        $this->keeperDAO = new KeeperDAO();
-    }
 
-    public function ShowAddView()
+    public function ShowReservCreate()
     {
-        require_once(VIEWS_PATH."keeper-add.php");
+        require_once(VIEWS_PATH."createReserv.php");
     }
 
     public function ShowAllKeeper()
@@ -42,3 +38,11 @@ class KeeperController
 
 
 ?>
+
+
+
+
+
+
+
+

@@ -7,6 +7,6 @@ use DAO\Connection as Connection;
 interface IKeeperDAO
 {
     function Add(Keeper $keeper);
-    function GetAll();
+    function GetAllKeeper();
 }
 ?>

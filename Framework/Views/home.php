@@ -10,9 +10,9 @@
                     <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Agregar Mascota</button>
                </form>
                <form action="<?php echo FRONT_ROOT ?>Pet/ShowAllPets" method="post" class="bg-light-alpha p-5">
-                    <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Lista de Keepers</button>
+                    <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Lista de Mascotas</button>
                </form>
-               <form action="<?php echo FRONT_ROOT ?>Student/ShowAddView" method="post" class="bg-light-alpha p-5">
+               <form action="<?php echo FRONT_ROOT ?>Reserv/ShowReservCreate" method="post" class="bg-light-alpha p-5">
                     <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Reservar Keepers</button>
                </form>
           </div>

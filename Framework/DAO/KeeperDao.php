@@ -36,28 +36,27 @@
             }
         }
 
-        public function GetAll()
+        public function GetAllKeeper()
         {
             try
             {
                 $keeperList = array();
 
-                $query = "SELECT * FROM ".$this->tableName;
+                $query = "select k.idKeepers, u.idUser, u.userName from keepers k
+                inner join user u on k.idUser = u.idUser
+                where u.idUser=k.idUser";
+
 
                 $this->connection = Connection::GetInstance();
 
                 $resultSet = $this->connection->Execute($query);
                 
                 foreach ($resultSet as $row)
-                {                
-                    $keeper = new Keeper('$firstName', '$lastName', '$dni', '$email', '$phone', '$petSize', '$payment');
-                    $keeper->setFirstName($row["firstName"]);
-                    $keeper->setLastName($row["lastName"]);
-                    $keeper->setDni($row["dni"]);
-                    $keeper->setEmail($row["email"]);
-                    $keeper->setPhone($row["phone"]);
-                    $keeper->setPetSize($row["petSize"]);
-                    $keeper->setPayment($row["payment"]);
+                {                                
+                    $keeper = new Keeper();
+                    $keeper->setIdKeeper($row["idKeepers"]);
+                    $keeper->setIdUser($row["idUser"]);
+                    $keeper->setUser($row["userName"]);
 
                     array_push($keeperList, $keeper);
                 }
