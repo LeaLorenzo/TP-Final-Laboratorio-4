@@ -36,6 +36,71 @@
             }
         }
 
+        public function AddDiasDisponibles($fechaDesde,$fechaHasta,$idKeeper)
+        {
+            try
+            {
+                $query = "INSERT INTO diasdisponibles (`fecha`, `hasta`, `idKeeper`) 
+                VALUES (:fechaDesde,:fechaHasta,:idKeeper);";
+
+                $parameters["fechaDesde"] = $fechaDesde;
+                $parameters["fechaHasta"] = $fechaHasta;
+                $parameters["idKeeper"] = $idKeeper;
+
+                $this->connection = Connection::GetInstance();
+                $this->connection->ExecuteNonQuery($query, $parameters);
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+
+        public function AddTarifa($valorDiario,$idKeeper)
+        {
+            try
+            {
+                $query = "INSERT INTO tarifakeeper (`valorDiario`,`idKeeper`) 
+                VALUES (:valorDiario,:idKeeper);";
+
+                $parameters["valorDiario"] = $valorDiario;
+                $parameters["idKeeper"] = $idKeeper;
+
+                $this->connection = Connection::GetInstance();
+                $this->connection->ExecuteNonQuery($query, $parameters);
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+
+        public function GetKeeperById($idUser)
+        {
+            try
+            {
+                $query = "select idKeepers, idUser 
+                from keepers where idUser = :idUser";
+
+                $parameters['idUser'] = $idUser;
+
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query,$parameters);
+                foreach ($resultSet as $row)
+                {                                
+                    $keeper = new Keeper();
+                    $keeper->setIdKeeper($row["idKeepers"]);
+                    $keeper->setIdUser($row["idUser"]);
+                }
+
+                return $keeper;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+
         public function GetAllKeeper()
         {
             try

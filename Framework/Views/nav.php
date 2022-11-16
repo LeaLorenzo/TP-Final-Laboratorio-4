@@ -4,13 +4,19 @@
      </span>
      <ul class="navbar-nav ml-auto">
           <li class="nav-item">
+               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Home/">Inicio</a>
+          </li>
+          <li class="nav-item">
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>Student/ShowAddView">Ingresar Owner</a>
           </li>
           <li class="nav-item">
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>Student/ShowListView">Listar Owner</a>
           </li>
           <li class="nav-item">
-               <a class="nav-link" href="<?php echo FRONT_ROOT ?>User/Logout">Logout</a>
+               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Keeper/DiasDisponibles">Dias Disponibles</a>
           </li>   
+          <li class="nav-item">
+               <a class="nav-link" href="<?php echo FRONT_ROOT ?>User/Logout">Logout</a>
+          </li>
      </ul>
 </nav>

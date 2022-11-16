@@ -23,20 +23,25 @@ class KeeperController
         require_once(VIEWS_PATH."keeper-list.php");
     }
 
-    public function Add($firstName, $lastName,$dni,$email,$phone,$petSize,$payment)
+    public function DiasDisponibles()
     {
-        $keeper = new Keeper($firstName, $lastName,$dni,$email,$phone,$petSize,$payment);
-        $keeper->setFirstName($firstName);
-        $keeper->setLastName($lastName);
-        $keeper->setDni($dni);
-        $keeper->setEmail($email);
-        $keeper->setPhone($phone);
-        $keeper->setPetSize($petSize);
-        $keeper->setPayment($payment);
+        require_once(VIEWS_PATH."keeper-days.php");
+    }
 
-        $this->keeperDAO->Add($keeper);
+    public function AddDiasDisponibles($fechaDesde,$fechaHasta)
+    {
+        $keeper = $this->keeperDAO->GetKeeperById($_SESSION["loggedUser"]->getId());
+        //TODO COMPROBACION
+        $this->keeperDAO->AddDiasDisponibles($fechaDesde,$fechaHasta,$keeper->getIdKeeper());
+        require_once( VIEWS_PATH ."home.php");
+    }
 
-        $this->ShowAddView();
+    public function EstablecerTarifa($valorTarifa)
+    {
+        $keeper = $this->keeperDAO->GetKeeperById($_SESSION["loggedUser"]->getId());
+        //TODO COMPROBACION
+        $this->keeperDAO->AddTarifa($valorTarifa,$keeper->getIdKeeper());
+        require_once( VIEWS_PATH ."home.php");
     }
 }
 
