@@ -4,6 +4,7 @@ namespace Controllers;
 use DAO\KeeperDAO as KeeperDAO;
 use Models\Keeper as Keeper;
 use Models\Reserv as Reserv;
+use Models\DiaDisponible as DiaDisponible;
 
 class ReservController
 {
@@ -18,7 +19,7 @@ class ReservController
     {
         require_once(VIEWS_PATH."keeper/keeper-list.php");
     }
-    public function ShowViewReservKeeper()
+    public function ShowViewReservKeeper($fechaDesde, $fechaHasta)
     {
         require_once(VIEWS_PATH."reserva/createReservKeeper.php");
     }

@@ -5,6 +5,8 @@
     use DAO\IKeeperDAO as IKeeperDAO;
     use Models\Keeper as Keeper;    
     use DAO\Connection as Connection;
+    use Models\DiaDisponible as DiaDisponible;
+
 
     class KeeperDAO implements IKeeperDAO
     {
@@ -100,6 +102,35 @@
                 throw $ex;
             }
         }
+        public function GetByIdKeeper($idKeeper)
+        {
+            try
+            {
+
+                $query = "SELECT k.idKeepers, u.idUser, u.userName FROM keepers k
+                inner join user u on k.idUser = u.idUser
+                where k.idKeepers = :idKeepers";
+
+                $parameters['idKeepers'] = $idKeeper;
+
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query, $parameters);
+                foreach ($resultSet as $row)
+                {                                
+                    $keeper = new Keeper();
+                    $keeper->setIdKeeper($row["idKeepers"]);
+                    $keeper->setIdUser($row["idUser"]);
+                    $keeper->setUser($row["userName"]);
+                }
+                return $resultSet;
+                
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
 
         public function GetAllKeeper()
         {
@@ -127,6 +158,69 @@
                 }
 
                 return $keeperList;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+        
+        public function GetAllDiasDisponible()
+        {
+            try
+            {
+                $diasList = array();
+
+                $query = "select * from diasdisponibles;";
+
+
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+                
+                foreach ($resultSet as $row)
+                {                                
+                    $diaD = new DiaDisponible();
+                    $diaD->setIdDiaDisponible($row["idDiasDisponibles"]);
+                    $diaD->setFechaDesde($row["fecha"]);
+                    $diaD->setFechaHasta($row["hasta"]);
+                    $diaD->setIdKeeper($row["idKeeper"]);
+                    array_push($diasList, $diaD);
+                }
+
+                return $diasList;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+        
+        public function GetRangoFecha($fechaDesde, $fechaHasta)
+        {
+            try
+            {
+                $diaList = array();
+                $query = "select * from diasDisponibles 
+                WHERE DATE(fecha) BETWEEN :fechaDesde AND :fechaHasta AND 
+                DATE(hasta) BETWEEN :fechaDesde AND :fechaHasta;";
+
+                $parameters['fechaDesde'] = $fechaDesde;
+                $parameters['fechaHasta'] = $fechaHasta;
+
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query,$parameters);
+                foreach ($resultSet as $row)
+                {                                
+                    $diaD = new DiaDisponible();
+                    $diaD->setIdDiaDisponible($row["idDiasDisponibles"]);
+                    $diaD->setFechaDesde($row["fecha"]);
+                    $diaD->setFechaHasta($row["hasta"]);
+                    $diaD->setIdKeeper($row["idKeeper"]);
+                    array_push($diaList, $diaD);
+                }
+
+                return $diaList;
             }
             catch(Exception $ex)
             {
