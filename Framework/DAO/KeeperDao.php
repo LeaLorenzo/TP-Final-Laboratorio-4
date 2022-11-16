@@ -36,28 +36,92 @@
             }
         }
 
-        public function GetAll()
+        public function AddDiasDisponibles($fechaDesde,$fechaHasta,$idKeeper)
+        {
+            try
+            {
+                $query = "INSERT INTO diasdisponibles (`fecha`, `hasta`, `idKeeper`) 
+                VALUES (:fechaDesde,:fechaHasta,:idKeeper);";
+
+                $parameters["fechaDesde"] = $fechaDesde;
+                $parameters["fechaHasta"] = $fechaHasta;
+                $parameters["idKeeper"] = $idKeeper;
+
+                $this->connection = Connection::GetInstance();
+                $this->connection->ExecuteNonQuery($query, $parameters);
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+
+        public function AddTarifa($valorDiario,$idKeeper)
+        {
+            try
+            {
+                $query = "INSERT INTO tarifakeeper (`valorDiario`,`idKeeper`) 
+                VALUES (:valorDiario,:idKeeper);";
+
+                $parameters["valorDiario"] = $valorDiario;
+                $parameters["idKeeper"] = $idKeeper;
+
+                $this->connection = Connection::GetInstance();
+                $this->connection->ExecuteNonQuery($query, $parameters);
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+
+        public function GetKeeperById($idUser)
+        {
+            try
+            {
+                $query = "select idKeepers, idUser 
+                from keepers where idUser = :idUser";
+
+                $parameters['idUser'] = $idUser;
+
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query,$parameters);
+                foreach ($resultSet as $row)
+                {                                
+                    $keeper = new Keeper();
+                    $keeper->setIdKeeper($row["idKeepers"]);
+                    $keeper->setIdUser($row["idUser"]);
+                }
+
+                return $keeper;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+
+        public function GetAllKeeper()
         {
             try
             {
                 $keeperList = array();
 
-                $query = "SELECT * FROM ".$this->tableName;
+                $query = "select k.idKeepers, u.idUser, u.userName from keepers k
+                inner join user u on k.idUser = u.idUser
+                where u.idUser=k.idUser";
+
 
                 $this->connection = Connection::GetInstance();
 
                 $resultSet = $this->connection->Execute($query);
                 
                 foreach ($resultSet as $row)
-                {                
-                    $keeper = new Keeper('$firstName', '$lastName', '$dni', '$email', '$phone', '$petSize', '$payment');
-                    $keeper->setFirstName($row["firstName"]);
-                    $keeper->setLastName($row["lastName"]);
-                    $keeper->setDni($row["dni"]);
-                    $keeper->setEmail($row["email"]);
-                    $keeper->setPhone($row["phone"]);
-                    $keeper->setPetSize($row["petSize"]);
-                    $keeper->setPayment($row["payment"]);
+                {                                
+                    $keeper = new Keeper();
+                    $keeper->setIdKeeper($row["idKeepers"]);
+                    $keeper->setIdUser($row["idUser"]);
+                    $keeper->setUser($row["userName"]);
 
                     array_push($keeperList, $keeper);
                 }

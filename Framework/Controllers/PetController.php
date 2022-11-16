@@ -18,25 +18,23 @@ class PetController
 
     public function ShowAddView()
     {
-        require_once(VIEWS_PATH."addPet.php");
+        require_once(VIEWS_PATH."owner/addPet.php");
     }
 
     public function ShowView($message = "Mascota Cargada") {
         
-        require_once(VIEWS_PATH."home.php");
+        require_once(VIEWS_PATH."owner/homeOwner.php");
 
     }
 
     public function ShowAllPets()
     {
-        require_once(VIEWS_PATH . "pets-list.php");
+        require_once(VIEWS_PATH . "owner/pets-list.php");
     }
 
     public function AddPet($name, $breed, $healthBook, $photo, $video, $idTypePets)
     {
         $userOwner = new Owner();
-
-        var_dump($_SESSION["loggedUser"]->getId());
 
         $userOwner = $this->petDAO->GetOwnerbyId($_SESSION["loggedUser"]->getId());
         

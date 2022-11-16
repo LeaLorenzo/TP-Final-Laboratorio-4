@@ -2,8 +2,8 @@
 namespace Models; 
 class Keeper extends User
 {
-    private $petSize;
-    private $payment;
+    private $idKeeper;
+    private $idUser;
 
     /*
     function __construct($firstName,$lastName,$dni,$email,$phone,$petSize,$payment)
@@ -18,24 +18,24 @@ class Keeper extends User
     }
     */
 
-    public function getPetSize()
+    public function getIdKeeper()
     {
-        return $this->petSize;
+        return $this->idKeeper;
     }
 
-    public function setPetSize($petSize)
+    public function setIdKeeper($idKeeper)
     {
-        $this->petSize = $petSize;
+        $this->idKeeper = $idKeeper;
     }
 
-    public function getPayment()
+    public function getIdUser()
     {
-        return $this->payment;
+        return $this->idUser;
     }
 
-    public function setPayment($payment)
+    public function setIdUser($idUser)
     {
-        $this->payment = $payment;
+        $this->idUser = $idUser;
     }
 }
 ?>

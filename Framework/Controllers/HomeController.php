@@ -7,10 +7,11 @@
         {
             
             if(isset($_SESSION["loggedUser"])){
-                //var_dump($_SESSION);
-                //Si existe usuario en session pasa el logueo
-                require_once(VIEWS_PATH."home.php");
-
+                if($_SESSION['loggedUser']->getTypeUser()==1){ 
+                    require_once(VIEWS_PATH."owner/homeOwner.php");
+                }else{ 
+                    require_once(VIEWS_PATH."keeper/homeKeeper.php");
+                }
             }else{
                 //Si no hay usuario en session muestra el logueo
                 require_once(VIEWS_PATH."login.php");

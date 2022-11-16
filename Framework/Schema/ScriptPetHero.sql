@@ -13,6 +13,8 @@ CREATE TABLE `user` (
   PRIMARY KEY (`idUser`)
 ) ;
 
+alter table user change user userName varchar(50);
+
 drop table keepers;
 
 CREATE TABLE `keepers` (
@@ -35,11 +37,15 @@ CREATE TABLE `owner` (
   CONSTRAINT `idUserO` FOREIGN KEY (`idUser`) REFERENCES `user` (`idUser`)
 );
 
+drop table petstype;
+
 CREATE TABLE `petstype` (
   `idPetsType` int NOT NULL AUTO_INCREMENT,
   `description` varchar(45) NOT NULL,
   PRIMARY KEY (`idPetsType`)
 );
+
+drop table pets;
 
 CREATE TABLE `pets` (
   `idPets` int NOT NULL AUTO_INCREMENT,
@@ -115,10 +121,45 @@ CREATE TABLE `agendakeeper` (
   CONSTRAINT `idDisponible` FOREIGN KEY (`idDisponible`) REFERENCES `diasdisponibles` (`idDiasDisponibles`)
 );
 
-select * from user;
+INSERT INTO `pethero`.`petstype` (`idPetsType`, `description`) VALUES ('1', 'pequeño');
+INSERT INTO `pethero`.`petstype` (`idPetsType`, `description`) VALUES ('2', 'mediano');
+INSERT INTO `pethero`.`petstype` (`idPetsType`, `description`) VALUES ('3', 'grande');
 
+/*CONSULTAS DE PRUEBA*/
+
+select * from user;
 select * from owner;
 select * from keepers;
 
 INSERT INTO Owner (name, surname,idUser) VALUES (
                     "name","surname", 1);
+
+select * from pets;
+select * from petstype;
+select * from diasdisponibles;
+select * from agendaKeeper;
+select * from tarifakeeper;
+
+select * from diasDisponibles 
+WHERE DATE(fecha) BETWEEN '2022-12-05' AND '2022-12-25' AND 
+DATE(hasta) BETWEEN '2022-12-05' AND '2022-12-25';
+
+INSERT INTO pets (`name`, `foto`, `planVacuna`, `raza`, `video`, `idPetsType`, `idOwner`) 
+VALUES ('grido', '2', 'asd', 'calle', 'video', '1', '1');
+
+delete from pets where idPets = 4;
+
+INSERT INTO diasdisponibles (`fecha`, `hasta`, `idKeeper`) 
+VALUES ('2022-11-09', '2022-11-26', '2');
+
+INSERT INTO diasdisponibles (`fecha`, `hasta`, `idKeeper`) 
+VALUES ('2022-12-05', '2022-12-15', '1');
+
+INSERT INTO diasdisponibles (`fecha`, `hasta`, `idKeeper`) 
+VALUES ('2022-11-20', '2022-11-26', '1');
+
+INSERT INTO tarifaKeeper (`valorDiario`,`idKeeper`) 
+VALUES (1000,1);
+
+
+
