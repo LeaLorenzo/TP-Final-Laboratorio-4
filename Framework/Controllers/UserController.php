@@ -24,9 +24,9 @@ class UserController
                 //Crea la session y redirige home
                 $_SESSION["loggedUser"] = $userDB;      
                 if($_SESSION['loggedUser']->getTypeUser()==1){ 
-                    require_once(VIEWS_PATH."home.php");
+                    require_once(VIEWS_PATH."owner/homeOwner.php");
                 }else{ 
-                    require_once(VIEWS_PATH."homeKeeper.php");
+                    require_once(VIEWS_PATH."keeper/homeKeeper.php");
                 }
              } else {
                 //Crea un mensaje get y redirige login

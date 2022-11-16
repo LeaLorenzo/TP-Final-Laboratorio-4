@@ -15,12 +15,12 @@ class KeeperController
 
     public function ShowAddView()
     {
-        require_once(VIEWS_PATH."keeper-add.php");
+        require_once(VIEWS_PATH."keeper/keeper-add.php");
     }
 
     public function ShowAllKeeper()
     {
-        require_once(VIEWS_PATH."keeper-list.php");
+        require_once(VIEWS_PATH."keeper/keeper-list.php");
     }
 
     public function Add($firstName, $lastName,$dni,$email,$phone,$petSize,$payment)

@@ -11,14 +11,17 @@ class ReservController
 
     public function ShowReservCreate()
     {
-        require_once(VIEWS_PATH."createReserv.php");
+        require_once(VIEWS_PATH."reserva/createReserv.php");
     }
 
     public function ShowAllKeeper()
     {
-        require_once(VIEWS_PATH."keeper-list.php");
+        require_once(VIEWS_PATH."keeper/keeper-list.php");
     }
-
+    public function ShowViewReservKeeper()
+    {
+        require_once(VIEWS_PATH."reserva/createReservKeeper.php");
+    }
     public function Add($firstName, $lastName,$dni,$email,$phone,$petSize,$payment)
     {
         $keeper = new Keeper($firstName, $lastName,$dni,$email,$phone,$petSize,$payment);
