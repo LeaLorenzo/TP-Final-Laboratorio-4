@@ -8,7 +8,7 @@
      <section id="listado" class="mb-5">
           <div class="container">
                <h2 class="mb-4">Ingresar Usuario</h2>
-               <form action="<?php echo FRONT_ROOT ?>User/SignIn" method="post" class="bg-light-alpha p-5">
+               <form action="<?php echo FRONT_ROOT ?>User/SignUp" method="post" class="bg-light-alpha p-5">
                     <div class="row">    
                          
                          <div class="col-lg-4">
@@ -21,6 +21,12 @@
                               <div class="form-group">
                                    <label for="">password</label>
                                    <input type="password" name="password" class="form-control" id="idPass" placeholder="password">
+                              </div>
+                         </div>
+                         <div class="col-lg-4">
+                              <div class="form-group">
+                                   <label for="">Confirmar password</label>
+                                   <input type="password" name="confirmacion" class="form-control" id="idPass" placeholder="confirmacion">
                               </div>
                          </div>
                          <div class="col-lg-4">

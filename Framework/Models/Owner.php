@@ -1,6 +1,6 @@
 <?php
 namespace Models; 
-class Owner
+class Owner extends User
 {
     private $idOwner;
     private $firstName;

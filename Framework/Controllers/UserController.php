@@ -39,30 +39,30 @@ class UserController
         }
     }
 
-    public function SignIn()
+    public function SignUp($firstName,$user,$email,$password,$lastName)
     {
         $userDB = null;
-        if(isset($_POST["firstName"])){
+        if(isset($firstName)){
             $userDB = new Owner();
-            $userDB->setUser($_POST["user"]);
-            $userDB->setEmail($_POST["email"]);
-            $userDB->setPassword($_POST["password"]);
-            $userDB->setFirstName($_POST["firstName"]);
-            $userDB->setLastName($_POST["lastName"]);
+            $userDB->setUser($user);
+            $userDB->setEmail($email);
+            $userDB->setPassword($password);
+            $userDB->setFirstName($firstName);
+            $userDB->setLastName($lastName);
             $this->userDAO->AddOwner($userDB);
         }
         else{
             $userDB = new Keeper();
-            $userDB->setUser($_POST["user"]);
-            $userDB->setEmail($_POST["email"]);
-            $userDB->setPassword($_POST["password"]);
+            $userDB->setUser($user);
+            $userDB->setEmail($email);
+            $userDB->setPassword($password);
             $this->userDAO->AddKeeper($userDB);
         }
         $_SESSION["loggedUser"] = $userDB;
         require_once(VIEWS_PATH."home.php");
     }
 
-    public function SignInMenu()
+    public function SignUpMenu()
     {
         require_once(VIEWS_PATH."signInMenu.php");
     }
