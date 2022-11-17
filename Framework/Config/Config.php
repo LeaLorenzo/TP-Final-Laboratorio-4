@@ -7,9 +7,13 @@ define("VIEWS_PATH", "Views/");
 define("IMG_PATH", FRONT_ROOT.VIEWS_PATH . "img/");
 define("CSS_PATH", FRONT_ROOT.VIEWS_PATH . "css/");
 define("JS_PATH", FRONT_ROOT.VIEWS_PATH . "js/");
+define("UPLOADS_PATH", "uploads/");
 
 define("DB_HOST", "localhost");
 define("DB_NAME", "pethero");
 define("DB_USER", "root");
 define("DB_PASS", "");
+
+define("USERNAME_MAIL","robotmail30@gmail.com");
+define("PASSWORD_MAIL", "ghkjoekguiuizueo");
 ?>
