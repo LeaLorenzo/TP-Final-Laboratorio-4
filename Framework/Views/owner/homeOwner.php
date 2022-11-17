@@ -15,6 +15,9 @@
                <form action="<?php echo FRONT_ROOT ?>Reserv/ShowReservCreate" method="post" class="bg-light-alpha p-5">
                     <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Reservar Keepers</button>
                </form>
+               <form action="<?php echo FRONT_ROOT ?>Owner/ShowToPayReserv" method="post" class="bg-light-alpha p-5">
+                    <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Pagar reserva</button>
+               </form>
           </div>
      </section>
 </main>
