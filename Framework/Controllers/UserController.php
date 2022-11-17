@@ -18,23 +18,24 @@ class UserController
 
     public function Login($email, $password)
     {
-
-        
         $userDB = $this->userDAO->GetByEmail($email);
         if(!empty($userDB)){
             if ($email === $userDB->getEmail()  && $password === $userDB->getPassword() ) {
                 //Crea la session y redirige home
-            $_SESSION["loggedUser"] = $userDB;
-            require_once(VIEWS_PATH."home.php");
-
+                $_SESSION["loggedUser"] = $userDB;
+                if($_SESSION['loggedUser']->getTypeUser()==1){ 
+                    require_once(VIEWS_PATH."owner/homeOwner.php");
+                }else{ 
+                    require_once(VIEWS_PATH."keeper/homeKeeper.php");
+                }
              } else {
                 //Crea un mensaje get y redirige login
-                $_GET["errorLogueo"] = "Contraseña incorrecta";
+                $_REQUEST["errorLogueo"] = "Contraseña incorrecta";
                 require_once(VIEWS_PATH."login.php");
             }
         }else {
             //Crea un mensaje get y redirige login
-            $_GET["errorLogueo"] = "Email incorrecto";
+            $_REQUEST["errorLogueo"] = "Email incorrecto";
             require_once(VIEWS_PATH."login.php");
         }
     }
