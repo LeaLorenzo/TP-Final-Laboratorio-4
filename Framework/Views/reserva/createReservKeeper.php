@@ -7,6 +7,7 @@
      use DAO\PetDAO as PetDAO;
      use Models\Owner as Owner;
      use Models\Keeper as Keeper;
+     use Models\User as User;
      use DAO\KeeperDAO as KeeperDAO;
 
 ?>
@@ -16,21 +17,31 @@
             <h2 class="mb-4">Lista de Keepers</h2>
             <table class="table table-sm bg-light text-center">
                 <thead class="bg-dark text-white">
+                    <th>Fecha Desde</th>
+                    <th>Fecha Hasta</th>
                     <th>Keeper id</th>
-                    <th>User Name</th>
+                    <th>User Name Keeper</th>
                 </thead>
                 <tbody>
                 <?php
 
-                    $keeperDAO = new KeeperDAO();
-                            
-                    $keeperList=$keeperDAO->GetAllKeeper();
+                // echo $fechaDesde;
+                // echo $fechaHasta;
 
-                    foreach ($keeperList as $keeper){                      
+                $keeperDAO= new KeeperDAO();
+
+                $diaResult = $keeperDAO->GetRangoFecha($fechaDesde, $fechaHasta);
+                foreach($diaResult as $dia)
+                {
+                        $keeper = $keeperDAO->GetByIdKeeper($dia->getIdKeeper());
+                        // $fechaDesde= date("Y") . "-" . date("m") . "-" .date("d");
+                        // echo date("Y-m-d",strtotime($fechaDesde."+ 1 days"));
                 ?>      
                 <tr>
-                    <td><?php echo $keeper->getIdKeeper() ?></td>
-                    <td><?php echo $keeper->getUser() ?></td>
+                    <td><?php echo $dia->getFechaDesde() ?></td>
+                    <td><?php echo $dia->getFechaHasta() ?></td>
+                    <td><?php echo $dia->getIdKeeper() ?></td>
+                    <td><?php echo $keeper[0]["userName"] ?></td>
                 </tr>                               
                 <?php 
                     }

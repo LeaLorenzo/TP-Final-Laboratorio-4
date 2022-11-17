@@ -7,7 +7,7 @@
         private $email;
         private $password;
         private $typeUser;
-        private $user;
+        private $userName;
 
         public function getId()
         {
@@ -50,12 +50,12 @@
 
         public function getUser()
         {
-            return $this->user;
+            return $this->userName;
         }
         
-        public function setUser($user)
+        public function setUser($userName)
         {
-            $this->user = $user;
+            $this->userName = $userName;
         }
     }
 ?>
