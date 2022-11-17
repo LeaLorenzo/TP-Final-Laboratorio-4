@@ -1,11 +1,12 @@
 <?php
-
 namespace Controllers;
 
-use Models\User as User;
 use DAO\UserDAO as UserDAO;
 use Models\Keeper;
 use Models\Owner;
+use Models\PHPMailer as PHPMailer;
+use Models\SMTP as SMTP;
+use Models\Exception as Exception;
 
 class UserController
 {
@@ -22,7 +23,7 @@ class UserController
         if(!empty($userDB)){
             if ($email === $userDB->getEmail()  && $password === $userDB->getPassword() ) {
                 //Crea la session y redirige home
-                $_SESSION["loggedUser"] = $userDB;      
+                $_SESSION["loggedUser"] = $userDB;
                 if($_SESSION['loggedUser']->getTypeUser()==1){ 
                     require_once(VIEWS_PATH."owner/homeOwner.php");
                 }else{ 
@@ -30,60 +31,68 @@ class UserController
                 }
              } else {
                 //Crea un mensaje get y redirige login
-                $_GET["errorLogueo"] = "Contraseña incorrecta";
+                $_REQUEST["errorLogueo"] = "Contraseña incorrecta";
                 require_once(VIEWS_PATH."login.php");
             }
         }else {
             //Crea un mensaje get y redirige login
-            $_GET["errorLogueo"] = "Email incorrecto";
+            $_REQUEST["errorLogueo"] = "Email incorrecto";
             require_once(VIEWS_PATH."login.php");
         }
     }
 
-    public function SignIn()
+    public function SignUp($email,$password,$confirmarPassword,$user,$firstName = "",$lastName = "")
     {
-        $userDB = null;
-        if(isset($_POST["firstName"])){
-            $userDB = new Owner();
-            $userDB->setUser($_POST["userName"]);
-            $userDB->setEmail($_POST["email"]);
-            $userDB->setPassword($_POST["password"]);
-            $userDB->setFirstName($_POST["firstName"]);
-            $userDB->setLastName($_POST["lastName"]);
-            $this->userDAO->AddOwner($userDB);
-
-            $_SESSION["loggedUser"] = $userDB;
-            $_REQUEST["errorLogueo"] = "Email incorrecto";
-            require_once(VIEWS_PATH."login.php");
+        if($password == $confirmarPassword){
+            $verificacionEmail = $this->userDAO->GetByEmail($email);
+            if(empty($verificacionEmail)){
+                $userDB = null;
+                if(isset($_POST["tipoAnimal"])){
+                    $userDB = new Keeper();
+                    $userDB->setUser($user);
+                    $userDB->setEmail($email);
+                    $userDB->setPassword($password);
+                    $userDB->setTipoMascota($_POST["tipoAnimal"]);
+                    var_dump($userDB);
+                    $this->userDAO->AddKeeper($userDB);
+                }
+                else
+                {
+                    $userDB = new Owner();
+                    $userDB->setUser($user);
+                    $userDB->setEmail($email);
+                    $userDB->setPassword($password);
+                    $userDB->setFirstName($firstName);
+                    $userDB->setLastName($lastName);
+                    var_dump($userDB);
+                    $this->userDAO->AddOwner($userDB);
+                }
+            }
+            else{
+                $_REQUEST["errorLogueo"] = "Email ya registrado";
+            }
         }
         else{
-            $userDB = new Keeper();
-            $userDB->setUser($_POST["user"]);
-            $userDB->setEmail($_POST["email"]);
-            $userDB->setPassword($_POST["password"]);
-            $this->userDAO->AddKeeper($userDB);
-
-            $_SESSION["loggedUser"] = $userDB;
-            $_REQUEST["errorLogueo"] = "Email incorrecto";
-            require_once(VIEWS_PATH."login.php");
+            $_REQUEST["errorLogueo"] = "Error en contraseña";
         }
+        require_once(VIEWS_PATH."login.php");
     }
 
-    public function SignInMenu()
+    public function SignUpMenu()
     {
-        require_once(VIEWS_PATH."signInMenu.php");
+        require_once(VIEWS_PATH."signUpMenu.php");
     }
 
-    public function SignInOwner()
+    public function SignUpOwner()
     {
-        $_SESSION["signInType"] = 1;
-        require_once(VIEWS_PATH."signIn.php");
+        $_SESSION["signUpType"] = 1;
+        require_once(VIEWS_PATH."signUp.php");
     }
 
-    public function SignInKeeper()
+    public function SignUpKeeper()
     {
-        $_SESSION["signInType"] = 2;
-        require_once(VIEWS_PATH."signIn.php");
+        $_SESSION["signUpType"] = 2;
+        require_once(VIEWS_PATH."signUp.php");
     }
 
     public function Logout()
@@ -91,6 +100,29 @@ class UserController
         //Borra la session actual
         session_destroy();
         require_once(VIEWS_PATH . "login.php");
+    }
+
+    public function enviarMail($email = "", $encabezado = "", $texto = "", $imagen = null)
+    {
+        $mail = new PHPMailer(true);
+        try {
+            $mail->SMTPDebug = SMTP::DEBUG_OFF;                      
+            $mail->isSMTP();                                            
+            $mail->Host       = 'smtp.gmail.com';                    
+            $mail->SMTPAuth   = true;                                  
+            $mail->Username   = USERNAME_MAIL;                  
+            $mail->Password   = PASSWORD_MAIL;                         
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port       = 587;
+            $mail->setFrom(USERNAME_MAIL, 'PetHero');
+            $mail->addAddress($email);
+            $mail->isHTML(true);
+            $mail->Subject = $encabezado;
+            $mail->Body    = $texto;
+            $mail->send();
+        } catch (Exception $e) {
+            echo "Se produjo un error: {$mail->ErrorInfo}";
+        }
     }
 }
 

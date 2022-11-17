@@ -125,8 +125,29 @@ INSERT INTO `pethero`.`petstype` (`idPetsType`, `description`) VALUES ('1', 'peq
 INSERT INTO `pethero`.`petstype` (`idPetsType`, `description`) VALUES ('2', 'mediano');
 INSERT INTO `pethero`.`petstype` (`idPetsType`, `description`) VALUES ('3', 'grande');
 
+CREATE TABLE images
+(
+	imageId INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name NVARCHAR(100) NOT NULL
+)Engine=InnoDB;
+
+DELIMITER $$
+
+CREATE PROCEDURE images_add(IN Name VARCHAR(100))
+BEGIN
+    INSERT INTO images
+    	(name)
+	VALUES
+		(name);
+
+END$$
+
+alter table keepers 
+add column preferencia varchar(100);
+
 /*CONSULTAS DE PRUEBA*/
 
+select * from images;
 select * from user;
 select * from owner;
 select * from keepers;

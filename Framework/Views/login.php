@@ -1,6 +1,6 @@
 <?php
-   if(isset($_GET["errorLogueo"])){
-          echo $_GET["errorLogueo"];
+   if(isset($_REQUEST["errorLogueo"])){
+          echo $_REQUEST["errorLogueo"];
      }
 
 ?>
@@ -26,7 +26,7 @@
                     </div>
                     <button type="submit" class="btn btn-dark ml-auto d-block">Entrar</button>
                </form>
-               <form action="<?php echo FRONT_ROOT ?>User/SignInMenu" method="post" class="bg-light-alpha p-5">
+               <form action="<?php echo FRONT_ROOT ?>User/SignUpMenu" method="post" class="bg-light-alpha p-5">
                     <button type="submit" class="btn btn-dark ml-auto d-block">Registrarse</button>     
                </form>
           </div>

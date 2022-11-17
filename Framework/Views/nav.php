@@ -13,6 +13,9 @@
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>Student/ShowListView">Listar Owner</a>
           </li>
           <li class="nav-item">
+               <a class="nav-link" href="<?php echo FRONT_ROOT ?>Image/ShowUploadView">Cargar Imagen</a>
+          </li>   
+          <li class="nav-item">
                <a class="nav-link" href="<?php echo FRONT_ROOT ?>Keeper/DiasDisponibles">Dias Disponibles</a>
           </li>   
           <li class="nav-item">

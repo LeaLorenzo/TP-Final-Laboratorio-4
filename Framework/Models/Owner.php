@@ -7,7 +7,6 @@ class Owner extends User
     private $lastName;
     private $idUser;
 
-
     public function getFirstName()
     {
         return $this->firstName;
