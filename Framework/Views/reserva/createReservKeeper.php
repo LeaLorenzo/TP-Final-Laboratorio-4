@@ -49,5 +49,16 @@
                 </tbody>
             </table>
         </div>
+        <form action="<?php echo FRONT_ROOT ?>Reserv/ShowViewReservPets" method="post" class="bg-light-alpha p-5">
+                    <div class="col-lg-3">
+                        <label for="id">IdKeeeper</label>
+                        <input type="number" name="idKeeper" class="form-control form-control-ml" required>
+                    </div>
+                    <?php
+                    $_SESSION["fechaDesde"]=$fechaDesde;
+                    $_SESSION["fechaHasta"]=$fechaHasta;
+                    ?>
+                    <button type="submit" class="btn btn-dark ml-auto d-block">Elegir</button>     
+        </form>
     </section>
 </main>

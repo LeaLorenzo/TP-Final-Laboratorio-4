@@ -1,42 +1,56 @@
 <?php
 namespace Controllers;
 
-use DAO\KeeperDAO as KeeperDAO;
+use DAO\ReservDAO as ReservDAO;
 use Models\Keeper as Keeper;
 use Models\Reserv as Reserv;
 use Models\DiaDisponible as DiaDisponible;
 
 class ReservController
 {
+    private $reservDAO;
 
+    public function __construct()
+    {
+        $this->reservDAO = new ReservDAO();
+    }
 
     public function ShowReservCreate()
     {
-        require_once(VIEWS_PATH."reserva/createReserv.php");
-    }
-
-    public function ShowAllKeeper()
-    {
-        require_once(VIEWS_PATH."keeper/keeper-list.php");
+        require_once(VIEWS_PATH."reserva/createReserv.php");    
     }
     public function ShowViewReservKeeper($fechaDesde, $fechaHasta)
     {
         require_once(VIEWS_PATH."reserva/createReservKeeper.php");
     }
-    public function Add($firstName, $lastName,$dni,$email,$phone,$petSize,$payment)
+    public function ShowViewReservPets($idKeeper)
     {
-        $keeper = new Keeper($firstName, $lastName,$dni,$email,$phone,$petSize,$payment);
-        $keeper->setFirstName($firstName);
-        $keeper->setLastName($lastName);
-        $keeper->setDni($dni);
-        $keeper->setEmail($email);
-        $keeper->setPhone($phone);
-        $keeper->setPetSize($petSize);
-        $keeper->setPayment($payment);
+        require_once(VIEWS_PATH."reserva/createReservPets.php");    
+    }
+    public function ShowViewReservEnd($idPet)
+    {
+        require_once(VIEWS_PATH."reserva/createReservEnd.php");
+    }
+    public function ShowAllKeeper()
+    {
+        require_once(VIEWS_PATH."keeper/keeper-list.php");
+    }
+    public function ShowViewHome(){
+        require_once( VIEWS_PATH ."owner/homeOwner.php");
+    }   
 
-        $this->keeperDAO->Add($keeper);
+    public function AddReserv($importeXreserva)
+    {
+        
+        $_SESSION["reserv"]->setImporteXreserva($importeXreserva);
 
-        $this->ShowAddView();
+        $reserv=new Reserv();
+
+        $reserv=$_SESSION["reserv"];
+
+        $this->reservDAO->Add($reserv);
+
+        $this->ShowViewHome();
     }
 }
 

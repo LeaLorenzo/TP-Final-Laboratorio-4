@@ -227,4 +227,22 @@
                 throw $ex;
             }
         }
+        public function GetTarifaKeeper($idKeeper){
+            try
+            {
+                $query = "select * from tarifakeeper
+                where idKeeper = :idKeeper";
+
+                $parameters['idKeeper'] = $idKeeper;
+
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query,$parameters);
+
+                return $resultSet;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
     }
