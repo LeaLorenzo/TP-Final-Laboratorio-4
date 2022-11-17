@@ -1,5 +1,5 @@
 <?php 
-     require_once(VIEWS_PATH . "nav.php");
+     require_once(VIEWS_PATH . "keeper/navKeeper.php");
 ?>
 <main class="py-5">
      <section id="listado" class="mb-5">
@@ -11,8 +11,8 @@
                <form action="<?php echo FRONT_ROOT ?>Keeper/ShowAllKeeper" method="post" class="bg-light-alpha p-5">
                     <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Lista de Keepers</button>
                </form>
-               <form action="<?php echo FRONT_ROOT ?>Student/ShowAddView" method="post" class="bg-light-alpha p-5">
-                    <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Reservar Keepers</button>
+               <form action="<?php echo FRONT_ROOT ?>Keeper/ListReserv" method="post" class="bg-light-alpha p-5">
+                    <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Lista de Reservas</button>
                </form>
           </div>
      </section>

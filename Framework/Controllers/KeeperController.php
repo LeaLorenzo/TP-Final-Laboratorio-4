@@ -28,6 +28,9 @@ class KeeperController
         require_once(VIEWS_PATH."keeper-days.php");
     }
 
+    public function ListReserv(){
+        require_once(VIEWS_PATH."keeper/reserv-list-keeper.php");
+    }
     public function AddDiasDisponibles($fechaDesde,$fechaHasta)
     {
         $flag=0;

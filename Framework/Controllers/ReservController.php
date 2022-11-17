@@ -1,42 +1,75 @@
 <?php
 namespace Controllers;
 
-use DAO\KeeperDAO as KeeperDAO;
+use DAO\ReservDAO as ReservDAO;
+use Controllers\EmailController as EmailController;
 use Models\Keeper as Keeper;
 use Models\Reserv as Reserv;
 use Models\DiaDisponible as DiaDisponible;
 
 class ReservController
 {
+    private $reservDAO;
+    private $emailController;
 
+    public function __construct()
+    {
+        $this->reservDAO = new ReservDAO();
+        $this->emailController = new EmailController();
+    }
 
     public function ShowReservCreate()
     {
-        require_once(VIEWS_PATH."reserva/createReserv.php");
-    }
-
-    public function ShowAllKeeper()
-    {
-        require_once(VIEWS_PATH."keeper/keeper-list.php");
+        require_once(VIEWS_PATH."reserva/createReserv.php");    
     }
     public function ShowViewReservKeeper($fechaDesde, $fechaHasta)
     {
         require_once(VIEWS_PATH."reserva/createReservKeeper.php");
     }
-    public function Add($firstName, $lastName,$dni,$email,$phone,$petSize,$payment)
+    public function ShowViewReservPets($idKeeper)
     {
-        $keeper = new Keeper($firstName, $lastName,$dni,$email,$phone,$petSize,$payment);
-        $keeper->setFirstName($firstName);
-        $keeper->setLastName($lastName);
-        $keeper->setDni($dni);
-        $keeper->setEmail($email);
-        $keeper->setPhone($phone);
-        $keeper->setPetSize($petSize);
-        $keeper->setPayment($payment);
+        require_once(VIEWS_PATH."reserva/createReservPets.php");    
+    }
+    public function ShowViewReservEnd($idPet)
+    {
+        require_once(VIEWS_PATH."reserva/createReservEnd.php");
+    }
+    public function ShowAllKeeper()
+    {
+        require_once(VIEWS_PATH."keeper/keeper-list.php");
+    }
+    public function ShowViewHomeOwner(){
+        require_once( VIEWS_PATH ."owner/homeOwner.php");
+    } 
+    public function ShowViewHomeKeeper(){
 
-        $this->keeperDAO->Add($keeper);
+        require_once( VIEWS_PATH ."keeper/homeKeeper.php");
+    }  
+    
+    public function setEstado($idKeeper){
 
-        $this->ShowAddView();
+        $this->reservDAO->setReservEstado($idKeeper);
+
+  
+
+        $this->emailController->enviarUrl("theirsha17@gmail.com", "confirmada");
+        require_once( VIEWS_PATH ."keeper/homeKeeper.php");
+
+    }
+
+    public function AddReserv($importeXreserva)
+    {
+        
+        $_SESSION["reserv"]->setImporteXreserva($importeXreserva);
+       
+
+        $reserv=new Reserv();
+
+        $reserv=$_SESSION["reserv"];
+
+        $this->reservDAO->Add($reserv);
+
+        $this->ShowViewHomeOwner();
     }
 }
 

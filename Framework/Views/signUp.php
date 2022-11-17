@@ -1,9 +1,3 @@
-<?php
-   if(isset($_SESSION["signInType"])){
-          echo $_SESSION["signInType"];
-     }
-
-?>
 <main class="py-5">
      <section id="listado" class="mb-5">
           <div class="container">
@@ -14,13 +8,19 @@
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="">email</label>
-                                   <input type="text" name="email" value="" class="form-control" placeholder="email">
+                                   <input type="email" name="email" value="" class="form-control" placeholder="email" required>
                               </div>
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="">password</label>
-                                   <input type="password" name="password" class="form-control" id="idPass" placeholder="password">
+                                   <input type="password" name="password" class="form-control" placeholder="password" required>
+                              </div>
+                         </div>
+                         <div class="col-lg-4">
+                              <div class="form-group">
+                                   <label for="">confirmar password</label>
+                                   <input type="password" name="confirmarPassword" class="form-control" placeholder="Confirmar password" required>
                               </div>
                          </div>
                          <div class="col-lg-4">
@@ -32,14 +32,17 @@
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="">usuario</label>
-                                   <input type="text" name="user" class="form-control" placeholder="usuario">
+                                   <input type="text" name="user" class="form-control" placeholder="usuario" required>
                               </div>
                          </div>
                     </div>
                     <div class="row">    
                     <?php
-                         if($_SESSION["signInType"] == 1){
-                              require_once(VIEWS_PATH."signInOwner.php");
+                         if($_SESSION["signUpType"] == 1){
+                              require_once(VIEWS_PATH."signUpOwner.php");
+                         }
+                         else{
+                              require_once(VIEWS_PATH."signUpKeeper.php");
                          }
                     ?>
 

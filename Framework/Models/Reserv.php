@@ -11,6 +11,7 @@
         private $valorTotal;
         private $idKeeper;
         private $idPets;
+        private $estado;
 
         public function getIdReserv()
         {
@@ -49,7 +50,7 @@
 
         public function setImporteXreserva($importeXreserva)
         {
-            $this->importeXreserva = $importeXreserva
+            $this->importeXreserva = $importeXreserva;
         }
 
         public function getValorTotal()
@@ -80,6 +81,16 @@
         public function setIdPets($idPets)
         {
             $this->idPets = $idPets;
+        }
+        
+        public function getEstado()
+        {
+            return $this->estado;
+        }
+
+        public function setEstado($estado)
+        {
+            $this->estado = $estado;
         }
     }
 ?>

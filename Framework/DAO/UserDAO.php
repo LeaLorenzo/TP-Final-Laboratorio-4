@@ -11,21 +11,20 @@
     class UserDAO implements IUserDAO
     {
         private $connection;
-        private $tableName = "user";
+        private $tableName = "User";
 
         public function AddOwner(Owner $owner)
         {
             try
             {
-                $query = "INSERT INTO User (userName,password, email,tipoUsuario) VALUES (
+                $query = "INSERT INTO ".$this->tableName." (userName,password, email,tipoUsuario) VALUES (
                 :user, :password, :email,1);";
 
-                $parameters["userName"] = $owner->getUser();
+                $parameters["user"] = $owner->getUser();
                 $parameters["password"] = $owner->getPassword();
                 $parameters["email"] = $owner->getEmail();
 
                 $this->connection = Connection::GetInstance();
-
                 $this->connection->ExecuteNonQuery($query, $parameters);
 
                 $idDB = $this->GetByEmail($parameters["email"]);
@@ -54,7 +53,7 @@
         {
             try
             {
-                $query = "INSERT INTO user (userName,password, email,tipoUsuario) VALUES (
+                $query = "INSERT INTO ".$this->tableName." (userName,password, email,tipoUsuario) VALUES (
                 :userName, :password, :email,2);";
 
                 $parameters["userName"] = $keeper->getUser();
@@ -68,9 +67,10 @@
                 $parameters = null;
                 $query = null;
                 if(isset($idDB)){
+                    $query = "INSERT INTO keepers (idUser,preferencia) VALUES (
+                        :idUser,:preferencia);";
                     $parameters["idUser"] = $idDB->getId();
-                    $query = "INSERT INTO keepers (idUser) VALUES (
-                        :idUser);";
+                    $parameters["preferencia"] = $keeper->getTipoMascota();
                     $this->connection = Connection::GetInstance();
                     $this->connection->ExecuteNonQuery($query, $parameters);
                 }
