@@ -142,6 +142,13 @@ BEGIN
 
 END$$
 
+alter table keepers 
+add column nombre varchar(100);
+alter table keepers 
+add column apellido varchar(100);
+alter table keepers 
+add column preferencia varchar(100);
+
 /*CONSULTAS DE PRUEBA*/
 
 select * from images;
