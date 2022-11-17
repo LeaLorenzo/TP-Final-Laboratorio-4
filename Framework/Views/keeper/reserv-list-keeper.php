@@ -3,11 +3,12 @@
 require_once(VIEWS_PATH . "validate-session.php");
 require_once(VIEWS_PATH . "nav.php");
 
-use DAO\PetDAO as PetDAO;
+use DAO\KeeperDAO as KeeperDAO;
 use Controllers\PetController;
 use Models\Pet as Pet;
 use Models\Owner as Owner;
 use Models\Reserv as Reserv;
+use DAO\ReservDAO as ReservDAO;
 
 ?>
 <main class="py-5">
@@ -24,34 +25,43 @@ use Models\Reserv as Reserv;
                     <th>Valor Total</th>
                     <th>Id Keeper</th>
                     <th>Id Pets</th>
-                    <th>Owner id</th>
                 </thead>
                 <tbody>
                     <?php
                     $reserv = new Reserv();
-                    $reservDAO= new ReservDAO();
+                    $reservDAO = new ReservDAO();
+                    $keeperDAO = new KeeperDAO();
 
-                    var_dump($_SESSION["loggedUser"]);
+                    $keeper = $this->keeperDAO->GetKeeperById($_SESSION["loggedUser"]->getId());
 
-                    $reservList=$reservDAO->GetReservById();
-                    foreach ($petList as $pet) {
+                    $reservList=$reservDAO->GetReservById($keeper->getIdKeeper());
+
+                    foreach ($reservList as $reserv) {
+                        if($reserv->getEstado()==0){
                     ?>
                             <tr>
-                                <td><?php echo $pet->getIdPets() ?></td>
-                                <td><?php echo $pet->getName() ?></td>
-                                <td><?php echo $pet->getPhoto() ?></td>
-                                <td><?php echo $pet->getHealthBook() ?></td>
-                                <td><?php echo $pet->getBreed() ?></td>
-                                <td><?php echo $pet->getVideo() ?></td>
-                                <td><?php echo $pet->getIdTypePets() ?></td>
-                                <td><?php echo $pet->getIdOwner() ?></td>
+                                <td><?php echo $reserv->getIdReserv() ?></td>
+                                <td><?php echo $reserv->getFechaDesde() ?></td>
+                                <td><?php echo $reserv->getFechaHasta() ?></td>
+                                <td><?php echo $reserv->getImporteXreserva() ?></td>
+                                <td><?php echo $reserv->getValorTotal() ?></td>
+                                <td><?php echo $reserv->getIdKeeper() ?></td>
+                                <td><?php echo $reserv->getIdPets() ?></td>
                             </tr>
                     <?php
+                        }
                     }
                     ?>
                 </tbody>
             </table>
         </div>
+        <form action="<?php echo FRONT_ROOT ?>Reserv/setEstado" method="post" class="bg-light-alpha p-5">
+            <div class="col-lg-3">
+                <label for="id">idReserv</label>
+                <input type="number" name="idKeeper" class="form-control form-control-ml" required>
+            </div>
+            <button type="submit" class="btn btn-dark ml-auto d-block">Elegir Para Confirmar</button>     
+        </form>
     </section>
 </main>
 

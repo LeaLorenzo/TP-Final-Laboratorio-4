@@ -41,10 +41,10 @@
             {
                 $reservList = array();
 
-                $query = "SELECT * FROM keepers 
-                where idKeepers = :idKeepers";
+                $query = "SELECT * FROM reserva
+                where idKeeper = :idKeeper";
 
-                $parameters['idKeepers'] = $idKeeper;
+                $parameters['idKeeper'] = $idKeeper;
 
                 $this->connection = Connection::GetInstance();
 
@@ -52,11 +52,12 @@
                 foreach ($resultSet as $row)
                 {                                
                     $reserv = new Reserv();
-                    $reserv->setIdReserv($row["idReserv"]);
+                    $reserv->setIdReserv($row["idReserva"]);
                     $reserv->setFechaDesde($row["fechaDesde"]);
                     $reserv->setFechaHasta($row["fechaHasta"]);
-                    $reserv->setImporteXreserva($row["importeXreserva"]);
-                    $reserv->setValorTotal($row["idKeepers"]);
+                    $reserv->setImporteXreserva($row["importexReserva"]);
+                    $reserv->setValorTotal($row["valorTotal"]);
+                    $reserv->setIdKeeper($row["idKeeper"]);
                     $reserv->setIdPets($row["idPets"]);
                     $reserv->setEstado($row["estado"]);
 
@@ -64,6 +65,24 @@
                 }
                 return $reservList;
             }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+        public function setReservEstado($idReserv){
+        
+            try
+            {
+                $query = "UPDATE reserva SET estado = '1' WHERE idReserva = :idReserv";
+
+                $parameters["idReserv"] = $idReserv;
+
+                $this->connection = Connection::GetInstance();
+
+                $this->connection->ExecuteNonQuery($query, $parameters);
+
+            }     
             catch(Exception $ex)
             {
                 throw $ex;

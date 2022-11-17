@@ -35,9 +35,21 @@ class ReservController
     {
         require_once(VIEWS_PATH."keeper/keeper-list.php");
     }
-    public function ShowViewHome(){
+    public function ShowViewHomeOwner(){
         require_once( VIEWS_PATH ."owner/homeOwner.php");
-    }   
+    } 
+    public function ShowViewHomeKeeper(){
+
+        require_once( VIEWS_PATH ."keeper/homeKeeper.php");
+    }  
+    
+    public function setEstado($idKeeper){
+
+        $this->reservDAO->setReservEstado($idKeeper);
+
+        require_once( VIEWS_PATH ."keeper/homeKeeper.php");
+
+    }
 
     public function AddReserv($importeXreserva)
     {
