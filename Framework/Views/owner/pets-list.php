@@ -51,28 +51,6 @@ use Models\Owner as Owner;
             </table>
         </div>
     </section>
-    
-
-    <!-- <section id="eliminar" class="mb-5">
-        <form action="<?php echo FRONT_ROOT . "Pet/Remove" ?>" method="post">
-            <div class="container">
-                <h3 class="mb-3">Eliminar Mascota</h3>
-                <div class="bg-light p-4">
-                    <div class="row">
-                        <div class="col-lg-3">
-                            <label for="id">Id</label>
-                            <input type="number" name="id" id="id" class="form-control form-control-ml" required>
-                        </div>
-                        <div class="col-lg-3">
-                            <span>&nbsp;</span>
-                            <button type="submit" name="btn" class="btn btn-danger ml-auto d-block">Eliminar</button>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </form>
-    </section> HAY Q TERMINARLO-->
 </main>
 
 <?php

@@ -2,8 +2,8 @@
 namespace Controllers;
 
 use DAO\ReservDAO as ReservDAO;
+use DAO\KeeperDAO as KeeperDAO;
 use Controllers\EmailController as EmailController;
-use DAO\KeeperDAO;
 use Models\Reserv as Reserv;
 
 class ReservController
@@ -47,11 +47,23 @@ class ReservController
         require_once( VIEWS_PATH ."keeper/homeKeeper.php");
     }  
     
-    public function setEstado($idKeeper){
+    public function setEstado($idReserv){
 
-        $this->reservDAO->setReservEstado($idKeeper);
-        $this->emailController->enviarUrl("theirsha17@gmail.com", "confirmada");
+        $this->reservDAO->setReservEstado($idReserv);
+        $keeperDAO = new KeeperDAO();
+
+        $keeper = $keeperDAO->GetKeeperById($_SESSION["loggedUser"]->getId());
+        
+        $this->emailController->enviarUrl($keeper->getEmail(), "confirmada");
         require_once( VIEWS_PATH ."keeper/homeKeeper.php");
+
+    }
+    public function setEstadoPagado($idReserv, $paga){
+
+        //$this->reservDAO->setReservEstadoPagado($idReserv);
+
+        $this->emailController->enviarMail($_SESSION["loggedUser"]->getEmail(), "pago","Paga realizada muchas gracias");
+        require_once( VIEWS_PATH ."owner/homeOwner.php");
 
     }
 

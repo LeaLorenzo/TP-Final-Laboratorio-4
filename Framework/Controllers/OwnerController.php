@@ -25,6 +25,13 @@ class OwnerController
         require_once(VIEWS_PATH."owner-list.php");
     }
 
+    public function ShowToPayReserv()
+    {
+        require_once(VIEWS_PATH."owner/payReserv.php");
+    }
+    
+
+
     public function Add($firstName, $lastName,$dni,$email,$phone)
     {
         $owner = new Owner($firstName, $lastName,$dni,$email,$phone);
