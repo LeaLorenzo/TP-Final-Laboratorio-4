@@ -25,12 +25,6 @@
                          </div>
                          <div class="col-lg-4">
                               <div class="form-group">
-                                   <label for="">Confirmar password</label>
-                                   <input type="password" name="confirmacion" class="form-control" id="idPass" placeholder="confirmacion">
-                              </div>
-                         </div>
-                         <div class="col-lg-4">
-                              <div class="form-group">
                                    <label for="">usuario</label>
                                    <input type="text" name="user" class="form-control" placeholder="usuario" required>
                               </div>
