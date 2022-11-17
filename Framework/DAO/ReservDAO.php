@@ -89,5 +89,23 @@
                 throw $ex;
             }
         }
+        public function setReservEstadoPagado($idReserv){
+        
+            try
+            {
+                $query = "UPDATE reserva SET estado = '2' WHERE idReserva = :idReserv";
+
+                $parameters["idReserv"] = $idReserv;
+
+                $this->connection = Connection::GetInstance();
+
+                $this->connection->ExecuteNonQuery($query, $parameters);
+
+            }     
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
     }
 ?>

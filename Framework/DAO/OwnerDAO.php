@@ -5,6 +5,7 @@
     use DAO\IOwnerDAO as IOwnerDAO;
     use Models\Owner as Owner;    
     use DAO\Connection as Connection;
+    use Models\Reserv as Reserv;
 
     class OwnerDAO implements IOwnerDAO
     {
@@ -59,6 +60,69 @@
                 }
 
                 return $ownerList;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+        
+        public function GetOwnerById($idUser)
+        {
+            try
+            {
+                $query = "select * from owner where idUser = :idUser";
+
+                $parameters['idUser'] = $idUser;
+
+                $this->connection = Connection::GetInstance();
+                $resultSet = $this->connection->Execute($query,$parameters);
+
+                foreach ($resultSet as $row)
+                {                           
+                    $owner = new Owner();
+                    $owner->setIdOwner($row["idOwner"]);
+                    $owner->setFirstName($row["name"]);
+                    $owner->setLastName($row["surname"]);
+                    $owner->setIdUser($row["idUser"]);
+                }
+                return $owner;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+
+        public function GetReservPay($idOwner){
+            try{
+
+                $reservList = array();
+                $query="select r.idReserva, r.fechaDesde, r.fechaHasta, r.importexReserva, r.valorTotal, r.idKeeper, r.idPets, r.estado from reserva r
+                        inner join pets p on p.idPets=r.idPets
+                        inner join owner o on o.idOwner=p.idOwner
+                        where o.idOwner = :idOwner and estado=1";
+
+                $parameters['idOwner'] = $idOwner;
+
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query, $parameters);
+
+                foreach($resultSet as $row){
+                    $reserv = new Reserv();
+                    $reserv->setIdReserv($row["idReserva"]);
+                    $reserv->setFechaDesde($row["fechaDesde"]);
+                    $reserv->setFechaHasta($row["fechaHasta"]);
+                    $reserv->setImporteXreserva($row["importexReserva"]);
+                    $reserv->setValorTotal($row["valorTotal"]);
+                    $reserv->setIdKeeper($row["idKeeper"]);
+                    $reserv->setIdPets($row["idPets"]);
+                    $reserv->setEstado($row["estado"]);
+
+                    array_push($reservList, $reserv);
+                }
+                return $reservList;
             }
             catch(Exception $ex)
             {

@@ -81,8 +81,9 @@
         {
             try
             {
-                $query = "select idKeepers, idUser,preferencia 
-                from keepers where idUser = :idUser";
+                $query = "SELECT k.idKeepers,k.preferencia, u.idUser, u.userName, u.email from user u
+                inner join keepers k on k.idUser = u.idUser
+                where u.idUser = :idUser";
 
                 $parameters['idUser'] = $idUser;
 
@@ -93,7 +94,9 @@
                     $keeper = new Keeper();
                     $keeper->setIdKeeper($row["idKeepers"]);
                     $keeper->setIdUser($row["idUser"]);
+                    $keeper->setUser($row["userName"]);
                     $keeper->setTipoMascota($row["preferencia"]);
+                    $keeper->setEmail($row["email"]);
                 }
 
                 return $keeper;
@@ -108,7 +111,7 @@
             try
             {
 
-                $query = "SELECT k.idKeepers,k.preferencia, u.idUser, u.userName FROM keepers k
+                $query = "SELECT k.idKeepers,k.preferencia, u.idUser, u.userName, u.email FROM keepers k
                 inner join user u on k.idUser = u.idUser
                 where k.idKeepers = :idKeepers";
 
@@ -124,6 +127,7 @@
                     $keeper->setIdUser($row["idUser"]);
                     $keeper->setUser($row["userName"]);
                     $keeper->setTipoMascota($row["preferencia"]);
+                    $keeper->setEmail($row["email"]);
                 }
                 return $resultSet;
                 
