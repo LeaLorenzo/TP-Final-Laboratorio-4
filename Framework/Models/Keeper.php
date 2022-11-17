@@ -4,19 +4,7 @@ class Keeper extends User
 {
     private $idKeeper;
     private $idUser;
-
-    /*
-    function __construct($firstName,$lastName,$dni,$email,$phone,$petSize,$payment)
-    {
-        $this->firstName = $firstName;
-        $this->lastname = $lastName;
-        $this->dni = $dni;
-        $this->email = $email;
-        $this->phone = $phone;
-        $this->petSize = $petSize;
-        $this->payment = $payment;
-    }
-    */
+    private $tipoMascota;
 
     public function getIdKeeper()
     {
@@ -36,6 +24,16 @@ class Keeper extends User
     public function setIdUser($idUser)
     {
         $this->idUser = $idUser;
+    }
+
+    public function getTipoMascota()
+    {
+        return $this->tipoMascota;
+    }
+
+    public function setTipoMascota($tipoMascota)
+    {
+        $this->tipoMascota = $tipoMascota;
     }
 }
 ?>

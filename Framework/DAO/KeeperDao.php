@@ -81,7 +81,7 @@
         {
             try
             {
-                $query = "select idKeepers, idUser 
+                $query = "select idKeepers, idUser,preferencia 
                 from keepers where idUser = :idUser";
 
                 $parameters['idUser'] = $idUser;
@@ -93,6 +93,7 @@
                     $keeper = new Keeper();
                     $keeper->setIdKeeper($row["idKeepers"]);
                     $keeper->setIdUser($row["idUser"]);
+                    $keeper->setTipoMascota($row["preferencia"]);
                 }
 
                 return $keeper;
@@ -107,7 +108,7 @@
             try
             {
 
-                $query = "SELECT k.idKeepers, u.idUser, u.userName FROM keepers k
+                $query = "SELECT k.idKeepers,k.preferencia, u.idUser, u.userName FROM keepers k
                 inner join user u on k.idUser = u.idUser
                 where k.idKeepers = :idKeepers";
 
@@ -122,6 +123,7 @@
                     $keeper->setIdKeeper($row["idKeepers"]);
                     $keeper->setIdUser($row["idUser"]);
                     $keeper->setUser($row["userName"]);
+                    $keeper->setTipoMascota($row["preferencia"]);
                 }
                 return $resultSet;
                 
@@ -138,7 +140,7 @@
             {
                 $keeperList = array();
 
-                $query = "select k.idKeepers, u.idUser, u.userName from keepers k
+                $query = "select k.idKeepers,k.preferencia, u.idUser, u.userName from keepers k
                 inner join user u on k.idUser = u.idUser
                 where u.idUser=k.idUser";
 
@@ -153,6 +155,7 @@
                     $keeper->setIdKeeper($row["idKeepers"]);
                     $keeper->setIdUser($row["idUser"]);
                     $keeper->setUser($row["userName"]);
+                    $keeper->setTipoMascota($row["preferencia"]);
 
                     array_push($keeperList, $keeper);
                 }
