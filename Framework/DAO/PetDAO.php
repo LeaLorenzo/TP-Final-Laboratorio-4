@@ -105,6 +105,27 @@ class PetDAO implements IPetDAO
             throw $ex;
         }
     }
+    public function GetPetById($idPets)
+    {
+        try
+        {
+
+            $query = "select * from pets
+            where idPets = :idPets";
+
+            $parameters['idPets'] = $idPets;
+
+            $this->connection = Connection::GetInstance();
+
+            $resultSet = $this->connection->Execute($query, $parameters);
+
+            return $resultSet;
+        }
+        catch(Exception $ex)
+        {
+            throw $ex;
+        }
+    }
     // public function removePet($idOwner){
     //     try
     //     {
