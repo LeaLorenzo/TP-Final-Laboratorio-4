@@ -32,15 +32,12 @@ class OwnerController
     
 
 
-    public function Add($firstName, $lastName,$dni,$email,$phone)
+    public function Add($firstName, $lastName,$email)
     {
-        $owner = new Owner($firstName, $lastName,$dni,$email,$phone);
+        $owner = new Owner($firstName, $lastName,$email);
         $owner->setFirstName($firstName);
         $owner->setLastName($lastName);
-        $owner->setDni($dni);
         $owner->setEmail($email);
-        $owner->setPhone($phone);
-
         $this->ownerDAO->Add($owner);
 
         $this->ShowAddView();

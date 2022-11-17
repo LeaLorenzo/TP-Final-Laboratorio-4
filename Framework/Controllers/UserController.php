@@ -47,13 +47,12 @@ class UserController
             $verificacionEmail = $this->userDAO->GetByEmail($email);
             if(empty($verificacionEmail)){
                 $userDB = null;
-                if(isset($_POST["tipoAnimal"])){
+                if(isset($_REQUEST["typePets"])){
                     $userDB = new Keeper();
                     $userDB->setUser($user);
                     $userDB->setEmail($email);
                     $userDB->setPassword($password);
-                    $userDB->setTipoMascota($_POST["tipoAnimal"]);
-
+                    $userDB->setTipoMascota($_REQUEST["typePets"]);
                     $this->userDAO->AddKeeper($userDB);
                 }
                 else
