@@ -14,8 +14,8 @@
         {
             try
             {
-                $query = "INSERT INTO reserva (`fechaDesde`, `fechaHasta`, `importexReserva`, `valorTotal`, `idKeeper`, `idPets`) 
-                VALUES (:fechaDesde, :fechaHasta, :importeXreserva, :valorTotal, :idKeeper, :idPets);";
+                $query = "INSERT INTO reserva (`fechaDesde`, `fechaHasta`, `importexReserva`, `valorTotal`, `idKeeper`, `idPets`,`estado`) 
+                VALUES (:fechaDesde, :fechaHasta, :importeXreserva, :valorTotal, :idKeeper, :idPets, :estado);";
 
 
                 $parameters["fechaDesde"] = $reserv->getFechaDesde();
@@ -24,6 +24,7 @@
                 $parameters["valorTotal"] = $reserv->getValorTotal();
                 $parameters["idKeeper"] = $reserv->getIdKeeper();
                 $parameters["idPets"] = $reserv->getIdPets();
+                $parameters["estado"] = $reserv->getEstado();
 
                 $this->connection = Connection::GetInstance();
 

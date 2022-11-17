@@ -1,7 +1,7 @@
 <?php
 
 require_once(VIEWS_PATH . "validate-session.php");
-require_once(VIEWS_PATH . "nav.php");
+require_once(VIEWS_PATH . "owner/navOwner.php");
 
 use DAO\PetDAO as PetDAO;
 use Controllers\PetController;

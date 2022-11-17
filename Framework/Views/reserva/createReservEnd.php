@@ -1,6 +1,6 @@
 <?php
      require_once(VIEWS_PATH . "validate-session.php");   
-     require_once(VIEWS_PATH . "nav.php");
+     require_once(VIEWS_PATH . "owner/navOwner.php");
      
      use Controllers\PetController;
      use Models\Pet as Pet;
@@ -77,6 +77,7 @@
                         $reserv->setValorTotal($tarifa[0]["valorDiario"]);
                         $reserv->setIdKeeper($keeper["idKeepers"]);
                         $reserv->setIdPets($pet["idPets"]);
+                        $reserv->setEstado(0);
                         $_SESSION["reserv"]=$reserv;
                     ?>
                 </tbody>

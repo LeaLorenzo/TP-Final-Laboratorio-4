@@ -1,7 +1,7 @@
 <?php
 
 require_once(VIEWS_PATH . "validate-session.php");
-require_once(VIEWS_PATH . "nav.php");
+require_once(VIEWS_PATH . "keeper/navKeeper.php");
 
 use DAO\KeeperDAO as KeeperDAO;
 use Controllers\UserController;

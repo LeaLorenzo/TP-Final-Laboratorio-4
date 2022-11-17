@@ -53,7 +53,7 @@ class UserController
                     $userDB->setEmail($email);
                     $userDB->setPassword($password);
                     $userDB->setTipoMascota($_POST["tipoAnimal"]);
-                    var_dump($userDB);
+
                     $this->userDAO->AddKeeper($userDB);
                 }
                 else
@@ -64,7 +64,7 @@ class UserController
                     $userDB->setPassword($password);
                     $userDB->setFirstName($firstName);
                     $userDB->setLastName($lastName);
-                    var_dump($userDB);
+   
                     $this->userDAO->AddOwner($userDB);
                 }
             }
@@ -102,28 +102,7 @@ class UserController
         require_once(VIEWS_PATH . "login.php");
     }
 
-    public function enviarMail($email = "", $encabezado = "", $texto = "", $imagen = null)
-    {
-        $mail = new PHPMailer(true);
-        try {
-            $mail->SMTPDebug = SMTP::DEBUG_OFF;                      
-            $mail->isSMTP();                                            
-            $mail->Host       = 'smtp.gmail.com';                    
-            $mail->SMTPAuth   = true;                                  
-            $mail->Username   = USERNAME_MAIL;                  
-            $mail->Password   = PASSWORD_MAIL;                         
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-            $mail->Port       = 587;
-            $mail->setFrom(USERNAME_MAIL, 'PetHero');
-            $mail->addAddress($email);
-            $mail->isHTML(true);
-            $mail->Subject = $encabezado;
-            $mail->Body    = $texto;
-            $mail->send();
-        } catch (Exception $e) {
-            echo "Se produjo un error: {$mail->ErrorInfo}";
-        }
-    }
+   
 }
 
 ?>

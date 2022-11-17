@@ -14,7 +14,7 @@
                          <div class="col-lg-4">
                               <div class="form-group">
                                    <label for="">email</label>
-                                   <input type="text" name="firstName" value="" class="form-control" placeholder="email">
+                                   <input type="email" name="firstName" value="" class="form-control" placeholder="email">
                               </div>
                          </div>
                          <div class="col-lg-4">

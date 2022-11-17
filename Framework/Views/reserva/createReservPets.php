@@ -1,6 +1,6 @@
 <?php
      require_once(VIEWS_PATH . "validate-session.php");   
-     require_once(VIEWS_PATH . "nav.php");
+     require_once(VIEWS_PATH . "owner/navOwner.php");
      
      use Controllers\PetController;
      use Models\Pet as Pet;
