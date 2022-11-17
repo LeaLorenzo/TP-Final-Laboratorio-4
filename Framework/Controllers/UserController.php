@@ -1,11 +1,12 @@
 <?php
-
 namespace Controllers;
 
-use Models\User as User;
 use DAO\UserDAO as UserDAO;
 use Models\Keeper;
 use Models\Owner;
+use Models\PHPMailer as PHPMailer;
+use Models\SMTP as SMTP;
+use Models\Exception as Exception;
 
 class UserController
 {
@@ -22,7 +23,7 @@ class UserController
         if(!empty($userDB)){
             if ($email === $userDB->getEmail()  && $password === $userDB->getPassword() ) {
                 //Crea la session y redirige home
-                $_SESSION["loggedUser"] = $userDB;      
+                $_SESSION["loggedUser"] = $userDB;
                 if($_SESSION['loggedUser']->getTypeUser()==1){ 
                     require_once(VIEWS_PATH."owner/homeOwner.php");
                 }else{ 
@@ -91,6 +92,29 @@ class UserController
         //Borra la session actual
         session_destroy();
         require_once(VIEWS_PATH . "login.php");
+    }
+
+    public function enviarMail($email = "", $encabezado = "", $texto = "", $imagen = null)
+    {
+        $mail = new PHPMailer(true);
+        try {
+            $mail->SMTPDebug = SMTP::DEBUG_OFF;                      
+            $mail->isSMTP();                                            
+            $mail->Host       = 'smtp.gmail.com';                    
+            $mail->SMTPAuth   = true;                                  
+            $mail->Username   = USERNAME_MAIL;                  
+            $mail->Password   = PASSWORD_MAIL;                         
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Port       = 587;
+            $mail->setFrom(USERNAME_MAIL, 'PetHero');
+            $mail->addAddress($email);
+            $mail->isHTML(true);
+            $mail->Subject = $encabezado;
+            $mail->Body    = $texto;
+            $mail->send();
+        } catch (Exception $e) {
+            echo "Se produjo un error: {$mail->ErrorInfo}";
+        }
     }
 }
 
