@@ -3,18 +3,19 @@ namespace Controllers;
 
 use DAO\ReservDAO as ReservDAO;
 use Controllers\EmailController as EmailController;
-use Models\Keeper as Keeper;
+use DAO\KeeperDAO;
 use Models\Reserv as Reserv;
-use Models\DiaDisponible as DiaDisponible;
 
 class ReservController
 {
     private $reservDAO;
+    private $keeperDAO;
     private $emailController;
 
     public function __construct()
     {
         $this->reservDAO = new ReservDAO();
+        $this->keeperDAO = new KeeperDAO();
         $this->emailController = new EmailController();
     }
 
@@ -49,12 +50,16 @@ class ReservController
     public function setEstado($idKeeper){
 
         $this->reservDAO->setReservEstado($idKeeper);
-
-  
-
         $this->emailController->enviarUrl("theirsha17@gmail.com", "confirmada");
         require_once( VIEWS_PATH ."keeper/homeKeeper.php");
 
+    }
+
+    public function ShowListReservConfirm()
+    {
+        $keeper = $this->keeperDAO->GetKeeperById($_SESSION["loggedUser"]->getId());
+        $reservList=$this->reservDAO->GetReservConfirmById($keeper->getIdKeeper());
+        require_once(VIEWS_PATH."keeper/reserv-list-confirm-keeper.php");
     }
 
     public function AddReserv($importeXreserva)

@@ -71,6 +71,43 @@
                 throw $ex;
             }
         }
+
+        public function GetReservConfirmById($idKeeper)
+        {
+            try
+            {
+                $reservList = array();
+
+                $query = "SELECT * FROM reserva
+                where idKeeper = :idKeeper AND estado = 2";
+
+                $parameters['idKeeper'] = $idKeeper;
+
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query, $parameters);
+                foreach ($resultSet as $row)
+                {                                
+                    $reserv = new Reserv();
+                    $reserv->setIdReserv($row["idReserva"]);
+                    $reserv->setFechaDesde($row["fechaDesde"]);
+                    $reserv->setFechaHasta($row["fechaHasta"]);
+                    $reserv->setImporteXreserva($row["importexReserva"]);
+                    $reserv->setValorTotal($row["valorTotal"]);
+                    $reserv->setIdKeeper($row["idKeeper"]);
+                    $reserv->setIdPets($row["idPets"]);
+                    $reserv->setEstado($row["estado"]);
+
+                    array_push($reservList, $reserv);
+                }
+                return $reservList;
+            }
+            catch(Exception $ex)
+            {
+                throw $ex;
+            }
+        }
+
         public function setReservEstado($idReserv){
         
             try
