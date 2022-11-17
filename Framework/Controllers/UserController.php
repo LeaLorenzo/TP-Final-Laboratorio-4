@@ -1,11 +1,12 @@
 <?php
-
 namespace Controllers;
 
-use Models\User as User;
 use DAO\UserDAO as UserDAO;
 use Models\Keeper;
 use Models\Owner;
+use Models\PHPMailer as PHPMailer;
+use Models\SMTP as SMTP;
+use Models\Exception as Exception;
 
 class UserController
 {
@@ -40,44 +41,58 @@ class UserController
         }
     }
 
-    public function SignUp($firstName,$user,$email,$password,$lastName)
+    public function SignUp($email,$password,$confirmarPassword,$user,$firstName = "",$lastName = "")
     {
-        $userDB = null;
-        if(isset($firstName)){
-            $userDB = new Owner();
-            $userDB->setUser($user);
-            $userDB->setEmail($email);
-            $userDB->setPassword($password);
-            $userDB->setFirstName($firstName);
-            $userDB->setLastName($lastName);
-            $this->userDAO->AddOwner($userDB);
+        if($password == $confirmarPassword){
+            $verificacionEmail = $this->userDAO->GetByEmail($email);
+            if(empty($verificacionEmail)){
+                $userDB = null;
+                if(isset($_POST["tipoAnimal"])){
+                    $userDB = new Keeper();
+                    $userDB->setUser($user);
+                    $userDB->setEmail($email);
+                    $userDB->setPassword($password);
+                    $userDB->setTipoMascota($_POST["tipoAnimal"]);
+
+                    $this->userDAO->AddKeeper($userDB);
+                }
+                else
+                {
+                    $userDB = new Owner();
+                    $userDB->setUser($user);
+                    $userDB->setEmail($email);
+                    $userDB->setPassword($password);
+                    $userDB->setFirstName($firstName);
+                    $userDB->setLastName($lastName);
+   
+                    $this->userDAO->AddOwner($userDB);
+                }
+            }
+            else{
+                $_REQUEST["errorLogueo"] = "Email ya registrado";
+            }
         }
         else{
-            $userDB = new Keeper();
-            $userDB->setUser($user);
-            $userDB->setEmail($email);
-            $userDB->setPassword($password);
-            $this->userDAO->AddKeeper($userDB);
+            $_REQUEST["errorLogueo"] = "Error en contraseña";
         }
-        $_SESSION["loggedUser"] = $userDB;
-        require_once(VIEWS_PATH."home.php");
+        require_once(VIEWS_PATH."login.php");
     }
 
     public function SignUpMenu()
     {
-        require_once(VIEWS_PATH."signInMenu.php");
+        require_once(VIEWS_PATH."signUpMenu.php");
     }
 
-    public function SignInOwner()
+    public function SignUpOwner()
     {
-        $_SESSION["signInType"] = 1;
-        require_once(VIEWS_PATH."signIn.php");
+        $_SESSION["signUpType"] = 1;
+        require_once(VIEWS_PATH."signUp.php");
     }
 
-    public function SignInKeeper()
+    public function SignUpKeeper()
     {
-        $_SESSION["signInType"] = 2;
-        require_once(VIEWS_PATH."signIn.php");
+        $_SESSION["signUpType"] = 2;
+        require_once(VIEWS_PATH."signUp.php");
     }
 
     public function Logout()
@@ -86,6 +101,8 @@ class UserController
         session_destroy();
         require_once(VIEWS_PATH . "login.php");
     }
+
+   
 }
 
 ?>
